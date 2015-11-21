@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="CC.Pages.TestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CC.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemAccentColor}">
+            <SplitView.Pane>
+                <Grid Margin="0,48,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" Grid.Column="0" Source="ms-appx:///Assets/LockScreenLogo.png"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="This is a test." VerticalAlignment="Center" Margin="16,0,0,0"/>
+                </Grid>
+            </SplitView.Pane>
+            <Grid/>
+        </SplitView>
+
+        <ToggleButton x:Name="btnSVP"
+                      Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                      Background="Gold"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Width="48"
+                      Height="48"
+                      IsChecked="{Binding IsPaneOpen, ElementName=splitView, Mode=TwoWay}">
+            <ToggleButton.Content>
+                <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="24" />
+            </ToggleButton.Content>
+        </ToggleButton>
+
+    </Grid>
+</Page>
