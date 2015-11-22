@@ -4,36 +4,21 @@ using CC.Models;
 
 namespace CC.Models
 {
-
-    class CreditCard
+    class DesignCreditCard
     {
-        public Bank Bank { get; private set; }
-        public string NO { get; private set; }
-        public int UsedTimes { get; private set; }
+        public Bank Bank { get; set; }
+        public String NO { get; set; }
+        public int OrderDay { get; set; }
+        public int PayDay { get; set; }
+        public int UsedTimes { get; set; }
 
-        private int OrderDay { get; set; }
-        private int PayDay { get; set; }
-        
-
-        public CreditCard(Bank bank, String no, int orderDay, int payDay)
+        public DateTime CurrentOrderDate2
         {
-            this.Bank = bank;
-            this.NO = no;
-            this.OrderDay = orderDay;
-            this.PayDay = payDay;
+            get
+            {
+                return this.CurrentOrderDate(this.OrderDay);
+            }
         }
-
-        private DateTime CurrentOrderDate(int orderDay)
-        {
-            DateTime now = DateTime.Now;
-            return now.Day > orderDay ? now.AddDays(orderDay - now.Day) : now.AddDays(orderDay - now.Day).AddMonths(-1);
-        }
-
-        private DateTime PayDateForOrder(DateTime orderDate, int payDay)
-        {
-            return payDay > orderDate.Day ? orderDate.AddDays(payDay - orderDate.Day) : orderDate.AddDays(payDay - orderDate.Day).AddMonths(1);
-        }
-
 
         public DateTime CurrentOrderDate()
         {
@@ -44,19 +29,99 @@ namespace CC.Models
         {
             return this.PayDateForOrder(this.CurrentOrderDate(), this.PayDay);
         }
-
-        public int CurrentFreeDays()
+        public int CurrentFreeDays
         {
-            var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
-            var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
-            return payDateForNextOrder.Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            get
+            {
+                var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
+                var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
+                return payDateForNextOrder.Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            }
         }
 
-        public int TotalFreeDays()
+        public int TotalFreeDays
         {
-            var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
-            var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
-            return payDateForNextOrder.Subtract(this.CurrentOrderDate()).Days;          // Consider whether it should -1.
+            get
+            {
+                var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
+                var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
+                return payDateForNextOrder.Subtract(this.CurrentOrderDate()).Days;          // Consider whether it should -1.
+            }
+        }
+        private DateTime CurrentOrderDate(int orderDay)
+        {
+            DateTime now = DateTime.Now;
+            return now.Day > orderDay ? now.AddDays(orderDay - now.Day) : now.AddDays(orderDay - now.Day).AddMonths(-1);
+        }
+        private DateTime PayDateForOrder(DateTime orderDate, int payDay)
+        {
+            return payDay > orderDate.Day ? orderDate.AddDays(payDay - orderDate.Day) : orderDate.AddDays(payDay - orderDate.Day).AddMonths(1);
+        }
+    }
+
+    class CreditCard
+    {
+        public Bank Bank { get; private set; }
+        public string NO { get; set; }
+        public int UsedTimes { get; private set; }
+
+        public DateTime CurrentOrderDate
+        {
+            get
+            {
+                return this.getCurrentOrderDate(this.OrderDay);
+            }
+        }
+
+        public DateTime CurrentPayDate
+        {
+            get
+            {
+                return this.PayDateForOrder(this.CurrentOrderDate, this.PayDay);
+            }
+        }
+
+        public int CurrentFreeDays
+        {
+            get
+            {
+                var nextOrderDate = this.CurrentOrderDate.AddMonths(1);
+                var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
+                return payDateForNextOrder.Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            }
+        }
+
+        public int TotalFreeDays
+        {
+            get
+            {
+                var nextOrderDate = this.CurrentOrderDate.AddMonths(1);
+                var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
+                return payDateForNextOrder.Subtract(this.CurrentOrderDate).Days;          // Consider whether it should -1.
+            }
+        }
+
+        private int OrderDay { get; set; }
+        private int PayDay { get; set; }
+
+        public CreditCard(Bank bank, String no, int orderDay, int payDay)
+        {
+            this.Bank = bank;
+            this.NO = no;
+            this.OrderDay = orderDay;
+            this.PayDay = payDay;
+        }
+
+
+        private DateTime getCurrentOrderDate(int orderDay)
+        {
+            DateTime now = DateTime.Now;
+            return now.Day > orderDay ? now.AddDays(orderDay - now.Day) : now.AddDays(orderDay - now.Day).AddMonths(-1);
+        }
+
+        private DateTime PayDateForOrder(DateTime orderDate, int payDay)
+        {
+            return payDay > orderDate.Day ? orderDate.AddDays(payDay - orderDate.Day) : orderDate.AddDays(payDay - orderDate.Day).AddMonths(1);
         }
 
         public void AddUsedTime()

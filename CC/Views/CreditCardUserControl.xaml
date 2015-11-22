@@ -7,11 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:m="using:CC.Models"
     mc:Ignorable="d"
-    d:DesignHeight="250"
-    d:DesignWidth="400" MaxWidth="400" MaxHeight="250" MinHeight="75" MinWidth="120">
+    Width="400"
+    Height="250">
     <UserControl.Resources>
-        <JumpListItemBackgroundConverter x:Key="JumpListItemBackgroundConverter"/>
+        <local:BankToBankIconConverter x:Key="iconConverter"/>
+        <local:BankToBankNameConverter x:Key="nameConverter"/>
+        <local:DateToFormatDateConverter x:Key="dateConverter"/>
     </UserControl.Resources>
+
 
     <Grid BorderBrush="Red" Background="Red" CornerRadius="8">
         <Grid.RowDefinitions>
@@ -27,10 +30,10 @@
             </Grid.ColumnDefinitions>
             <Ellipse Grid.Column="0" Height="50" Width="50" StrokeThickness="0" Margin="10,10,20,10">
                 <Ellipse.Fill>
-                    <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/BankIcons/zhaoshang.png"/>
+                    <ImageBrush Stretch="Fill" ImageSource="{Binding Bank, Converter={StaticResource iconConverter}}"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <TextBlock Grid.Column="1" Text="招商银行" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="{Binding Bank, Converter={StaticResource nameConverter}}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -60,9 +63,9 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentOrderDate}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentOrderDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CurrentPayDate}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CurrentPayDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TotalFreeDays}" Foreground="White" FontSize="12"/>
