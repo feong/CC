@@ -5,6 +5,7 @@
     xmlns:local="using:CC.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="using:CC.Views"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -24,7 +25,9 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="This is a test." VerticalAlignment="Center" Margin="16,0,0,0"/>
                 </Grid>
             </SplitView.Pane>
-            <Grid/>
+            <Grid>
+                <v:CreditCardUserControl Height="250" Width="400"/>
+            </Grid>
         </SplitView>
 
         <ToggleButton x:Name="btnSVP"
