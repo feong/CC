@@ -1,4 +1,6 @@
-﻿namespace CC.Models
+﻿using System;
+
+namespace CC.Models
 {
     enum Bank
     {
@@ -9,8 +11,8 @@
     class BankInfo
     {
         public Bank Bank { get; set; }
-        public string Name { get; set; }
-        public string Uri { get; set; }
+        public String Name { get; set; }
+        public Uri Uri { get; set; }
 
         public BankInfo() { }
 
