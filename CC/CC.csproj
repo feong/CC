@@ -109,6 +109,9 @@
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\BankToBankIconConverter.cs" />
+    <Compile Include="Views\BankToBankInfoConverter.cs" />
+    <Compile Include="Views\BankToUCConverter.cs" />
     <Compile Include="Views\CreditCardUserControl.xaml.cs">
       <DependentUpon>CreditCardUserControl.xaml</DependentUpon>
     </Compile>
@@ -155,7 +158,7 @@
     <Content Include="Assets\BankIcons\xingye.png" />
     <Content Include="Assets\BankIcons\yaodunongshang.png" />
     <Content Include="Assets\BankIcons\youzheng.png" />
-    <Content Include="Assets\BankIcons\zada.png" />
+    <Content Include="Assets\BankIcons\Zhada.png" />
     <Content Include="Assets\BankIcons\zhaoshang.png" />
     <Content Include="Assets\BankIcons\zhongguo.png" />
     <Content Include="Assets\BankIcons\zhongxin.png" />

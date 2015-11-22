@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CC.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,15 @@ namespace CC.Pages
         public TestPage()
         {
             this.InitializeComponent();
+            this.testCode();
+        }
+
+
+
+        private void testCode()
+        {
+            var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "8888", 20, 5);
+            this.testCard.DataContext = zhaoshangCard;
         }
     }
 }

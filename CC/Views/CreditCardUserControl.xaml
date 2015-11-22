@@ -5,18 +5,136 @@
     xmlns:local="using:CC.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="using:CC.Models"
     mc:Ignorable="d"
     d:DesignHeight="250"
-    d:DesignWidth="400">
+    d:DesignWidth="400" MaxWidth="400" MaxHeight="250" MinHeight="75" MinWidth="120">
+    <UserControl.Resources>
+        <JumpListItemBackgroundConverter x:Key="JumpListItemBackgroundConverter"/>
+    </UserControl.Resources>
 
-    <Grid BorderBrush="Red" Background="Red" BorderThickness="4" CornerRadius="8">
-        <Ellipse HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="50">
-            <Ellipse.Fill>
-                <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/BankIcons/zhaoshang.png"/>
-            </Ellipse.Fill>
-        </Ellipse>
-        <TextBlock x:Name="tbDot" HorizontalAlignment="Left" Margin="10,86,0,0" TextWrapping="Wrap" Text="**** **** **** ****" VerticalAlignment="Top" Foreground="White" Width="280" FontSize="37.333"/>
-        <TextBlock x:Name="tbNO" HorizontalAlignment="Left" Margin="307,84,0,0" TextWrapping="Wrap" Text="8888" VerticalAlignment="Top" Foreground="White" Width="73" FontSize="32"/>
+    <Grid BorderBrush="Red" Background="Red" CornerRadius="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Ellipse Grid.Column="0" Height="50" Width="50" StrokeThickness="0" Margin="10,10,20,10">
+                <Ellipse.Fill>
+                    <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/BankIcons/zhaoshang.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <TextBlock Grid.Column="1" Text="招商银行" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid Background="White" Opacity="0.4"/>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="**** **** **** ****" Foreground="White" FontSize="38" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" Text="{Binding NO}" Foreground="White" FontSize="28"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2"/>
+
+        <Grid Grid.Row="3" HorizontalAlignment="Right" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentOrderDate}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CurrentPayDate}" Foreground="White" FontSize="12"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TotalFreeDays}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="当前免息期：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentFreeDays}" Foreground="White" FontSize="12"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="当前用卡次数：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding UsedTimes}" Foreground="White" FontSize="12"/>
+        </Grid>
 
     </Grid>
+
+
+    <!--<Grid BorderBrush="Red" Background="Red" CornerRadius="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Ellipse Grid.Column="0" Height="50" Width="50" StrokeThickness="0" Margin="10,10,20,10">
+                <Ellipse.Fill>
+                    <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/BankIcons/zhaoshang.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <TextBlock Grid.Column="1" Text="招商银行" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid Background="White" Opacity="0.4"/>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="**** **** **** ****" Foreground="White" FontSize="38" Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" Text="8888" Foreground="White" FontSize="28"/>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2"/>
+        
+        <Grid Grid.Row="3" HorizontalAlignment="Right" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="20" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="5" Foreground="White" FontSize="12"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="47" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="当前免息期：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="31" Foreground="White" FontSize="12"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="2" Text="当前用卡次数：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="3" Text="12" Foreground="White" FontSize="12"/>
+        </Grid>
+
+    </Grid>-->
 </UserControl>

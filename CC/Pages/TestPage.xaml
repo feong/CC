@@ -26,7 +26,7 @@
                 </Grid>
             </SplitView.Pane>
             <Grid>
-                <v:CreditCardUserControl Height="250" Width="400"/>
+                <v:CreditCardUserControl x:Name="testCard"/>
             </Grid>
         </SplitView>
 
