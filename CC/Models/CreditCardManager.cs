@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace CC.Models
                 if (instance == null)
                 {
                     instance = new CreditCardManager();
+                    instance.cards = new ObservableCollection<CreditCard>();
                 }
             }
             return instance;
@@ -30,11 +32,11 @@ namespace CC.Models
         private CreditCardManager() { }
         #endregion
 
-        private List<CreditCard> cards;
+        private ObservableCollection<CreditCard> cards;
 
-        public CreditCard[] GetAllCards()
+        public ObservableCollection<CreditCard> GetAllCards()
         {
-            return this.cards.ToArray();
+            return this.cards;
         }
 
         public void AddCard(CreditCard card)

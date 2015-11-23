@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -13,15 +14,12 @@ namespace CC.Views
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            // TODO: value is an enum of Bank, need convert Bank to BankInfo at first
-
             var uri = BankInfo.DefaultUri;
 
-            var bankInfo = value as BankInfo;
-            if (bankInfo != null && bankInfo.Uri.IsFile)
-            {
-                uri = bankInfo.Uri;
-            }
+            var bank = (Bank)value;
+            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var bankInfo = dic[bank.ToString()] as BankInfo;
+            uri = bankInfo.Uri;
             return new BitmapImage(uri);
         }
 
@@ -35,16 +33,29 @@ namespace CC.Views
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            // TODO: value is an enum of Bank, need convert Bank to BankInfo at first
-
-            var name = BankInfo.DefaultName;
-
-            var bankInfo = value as BankInfo;
-            if (bankInfo != null && bankInfo.Name != null)
-            {
-                name = bankInfo.Name;
-            }
+            var name = BankInfo.DefaultTitle;
+            
+            var bank = (Bank)value;
+            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var bankInfo = dic[bank.ToString()] as BankInfo;
+            name = bankInfo.Title;
             return name;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
+    public class BankToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var bank = (Bank)value;
+            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var bankInfo = dic[bank.ToString()] as BankInfo;
+            return bankInfo.Color;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -61,9 +72,34 @@ namespace CC.Views
             if (value != null)
             {
                 var date = (DateTime)value;
-                dateFormat = date.ToString("yyyy/MM/dd");
+                dateFormat = date.ToString("MM/dd");
             }
             return dateFormat;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class LeftDaysToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            String str = null;
+            int days = (int)value;
+            if (days > 0)
+            {
+                str = @" (还剩" + days + "天)";
+            } else if(days == 0)
+            {
+                str = @" (今天！)";
+            } else
+            {
+                str = @" (过去" + Math.Abs(days) + "天)";
+            }
+            return str;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

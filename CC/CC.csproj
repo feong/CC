@@ -121,45 +121,45 @@
     <None Include="CC_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\BankIcons\baoshang.png" />
-    <Content Include="Assets\BankIcons\beijing.png" />
-    <Content Include="Assets\BankIcons\chengdunongshang.png" />
-    <Content Include="Assets\BankIcons\chongqin.png" />
-    <Content Include="Assets\BankIcons\chongqingnongshang.png" />
-    <Content Include="Assets\BankIcons\gongshang.png" />
-    <Content Include="Assets\BankIcons\guangda.png" />
-    <Content Include="Assets\BankIcons\guangfa.png" />
-    <Content Include="Assets\BankIcons\guangzhou.png" />
-    <Content Include="Assets\BankIcons\haerbin.png" />
-    <Content Include="Assets\BankIcons\hangzhou.png" />
-    <Content Include="Assets\BankIcons\hankou.png" />
-    <Content Include="Assets\BankIcons\hebei.png" />
-    <Content Include="Assets\BankIcons\huaxia.png" />
-    <Content Include="Assets\BankIcons\huishang.png" />
-    <Content Include="Assets\BankIcons\jiangsu.png" />
-    <Content Include="Assets\BankIcons\jianshe.png" />
-    <Content Include="Assets\BankIcons\jiaotong.png" />
-    <Content Include="Assets\BankIcons\minsheng.png" />
-    <Content Include="Assets\BankIcons\nanchang.png" />
-    <Content Include="Assets\BankIcons\nanjing.png" />
-    <Content Include="Assets\BankIcons\ningbo.png" />
-    <Content Include="Assets\BankIcons\nongye.png" />
-    <Content Include="Assets\BankIcons\pingan.png" />
-    <Content Include="Assets\BankIcons\pufa.png" />
-    <Content Include="Assets\BankIcons\shanghai.png" />
-    <Content Include="Assets\BankIcons\shanghainongshang.png" />
-    <Content Include="Assets\BankIcons\shangrao.png" />
-    <Content Include="Assets\BankIcons\shengjing.png" />
-    <Content Include="Assets\BankIcons\tianjing.png" />
-    <Content Include="Assets\BankIcons\wenzhou.png" />
-    <Content Include="Assets\BankIcons\wulumuqishangye.png" />
-    <Content Include="Assets\BankIcons\xingye.png" />
-    <Content Include="Assets\BankIcons\yaodunongshang.png" />
-    <Content Include="Assets\BankIcons\youzheng.png" />
+    <Content Include="Assets\BankIcons\Baoshang.png" />
+    <Content Include="Assets\BankIcons\Beijing.png" />
+    <Content Include="Assets\BankIcons\Chengdunongshang.png" />
+    <Content Include="Assets\BankIcons\Chongqing.png" />
+    <Content Include="Assets\BankIcons\Chongqingnongshang.png" />
+    <Content Include="Assets\BankIcons\Gongshang.png" />
+    <Content Include="Assets\BankIcons\Guangda.png" />
+    <Content Include="Assets\BankIcons\Guangfa.png" />
+    <Content Include="Assets\BankIcons\Guangzhou.png" />
+    <Content Include="Assets\BankIcons\Haerbin.png" />
+    <Content Include="Assets\BankIcons\Hangzhou.png" />
+    <Content Include="Assets\BankIcons\Hankou.png" />
+    <Content Include="Assets\BankIcons\Hebei.png" />
+    <Content Include="Assets\BankIcons\Huaxia.png" />
+    <Content Include="Assets\BankIcons\Huishang.png" />
+    <Content Include="Assets\BankIcons\Jiangsu.png" />
+    <Content Include="Assets\BankIcons\Jianshe.png" />
+    <Content Include="Assets\BankIcons\Jiaotong.png" />
+    <Content Include="Assets\BankIcons\Minsheng.png" />
+    <Content Include="Assets\BankIcons\Nanchang.png" />
+    <Content Include="Assets\BankIcons\Nanjing.png" />
+    <Content Include="Assets\BankIcons\Ningbo.png" />
+    <Content Include="Assets\BankIcons\Nongye.png" />
+    <Content Include="Assets\BankIcons\Pingan.png" />
+    <Content Include="Assets\BankIcons\Pufa.png" />
+    <Content Include="Assets\BankIcons\Shanghai.png" />
+    <Content Include="Assets\BankIcons\Shanghainongshang.png" />
+    <Content Include="Assets\BankIcons\Shangrao.png" />
+    <Content Include="Assets\BankIcons\Shengjing.png" />
+    <Content Include="Assets\BankIcons\Tianjing.png" />
+    <Content Include="Assets\BankIcons\Wenzhou.png" />
+    <Content Include="Assets\BankIcons\Wulumuqishangye.png" />
+    <Content Include="Assets\BankIcons\Xingye.png" />
+    <Content Include="Assets\BankIcons\Yaodunongshang.png" />
+    <Content Include="Assets\BankIcons\Youzheng.png" />
     <Content Include="Assets\BankIcons\Zhada.png" />
-    <Content Include="Assets\BankIcons\zhaoshang.png" />
-    <Content Include="Assets\BankIcons\zhongguo.png" />
-    <Content Include="Assets\BankIcons\zhongxin.png" />
+    <Content Include="Assets\BankIcons\Zhaoshang.png" />
+    <Content Include="Assets\BankIcons\Zhongguo.png" />
+    <Content Include="Assets\BankIcons\Zhongxin.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -174,6 +174,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Models\BankInfos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

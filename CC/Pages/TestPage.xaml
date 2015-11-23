@@ -8,26 +8,63 @@
     xmlns:v="using:CC.Views"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemAccentColor}">
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="Large720">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="splitView.(UIElement.DisplayMode)" Value="CompactInline"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemAccentColor}" OpenPaneLength="160">
             <SplitView.Pane>
-                <Grid Margin="0,48,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Image Grid.Row="0" Grid.Column="0" Source="ms-appx:///Assets/LockScreenLogo.png"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="This is a test." VerticalAlignment="Center" Margin="16,0,0,0"/>
-                </Grid>
+                <ListView Margin="0,48,0,0">
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" >
+                            <SymbolIcon Symbol="DockBottom" Foreground="White" />
+                            <TextBlock Text="卡片管理"
+                                       Margin="24,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="White" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" >
+                            <SymbolIcon Symbol="Like" Foreground="White" />
+                            <TextBlock Text="用卡技巧"
+                                       Margin="24,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="White" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem>
+                        <StackPanel Orientation="Horizontal" >
+                            <SymbolIcon Symbol="Setting" Foreground="White" />
+                            <TextBlock Text="通知设置"
+                                       Margin="24,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="White" />
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
             </SplitView.Pane>
-            <Grid>
+
+            <ListView x:Name="lvCards" HorizontalAlignment="Center" Margin="0,48,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <v:CreditCardUserControl Margin="4"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!--<StackPanel Margin="20">
                 <v:CreditCardUserControl x:Name="testCard"/>
-            </Grid>
+            </StackPanel>-->
         </SplitView>
 
         <ToggleButton x:Name="btnSVP"

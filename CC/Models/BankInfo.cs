@@ -1,32 +1,40 @@
 ﻿using System;
+using Windows.UI.Xaml.Media;
 
 namespace CC.Models
 {
     enum Bank
     {
-        Zhada,
-        Zhaoshang,
-        Zhongxin
+        Baoshang, Beijing,
+        Chengdunongshang, Chongqing, Chongqingnongshang,
+        Gongshang, Guangda, Guangfa, Guangzhou,
+        Haerbin, Hangzhou, Hankou, Hebei, Huaxia, Huishang,
+        Jiangsu, Jianshe, Jiaotong,
+        Minsheng,
+        Nanchang, Nanjing, Ningbo, Nongye,
+        Pingan, Pufa,
+        Shanghai, Shanghainongshang, Shangrao, Shengjing,
+        Tianjing,
+        Wenzhou, Wulumuqishangye,
+        Xingye,
+        Yaodunongshang, Youzheng,
+        Zhada, Zhaoshang, Zhongguo, Zhongxin
     }
 
     class BankInfo
     {
-        public static Uri DefaultUri = new Uri(@"ms-appx:///Assets/BankIcons/Zada.png");
-        public static String DefaultName = @"渣打银行";
+        private static Uri baseUri = new Uri(@"ms-appx:///Assets/BankIcons/");
+        public static Uri DefaultUri = new Uri(baseUri, @"Nanchang.png");
+        public static String DefaultTitle = @"南昌银行";
 
         public Bank Bank { get; set; }
-        public String Name { get; set; }
-        public Uri Uri { get; set; }
-
-        public BankInfo() { }
-
-        public BankInfo(Bank bank, String name, String imagePath)
+        public String Title { get; set; }
+        public String ImageName { get; set; }
+        public Brush Color { get; set; }
+        public Uri Uri
         {
-            this.Bank = bank;
-            this.Name = name;
-            this.Uri = new Uri(@"ms-appx:///Assets/BankIcons/" + imagePath);
+            get { return new Uri(baseUri, this.ImageName); }
         }
-
     }
 
 }

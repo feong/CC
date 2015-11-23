@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,7 +35,16 @@ namespace CC.Pages
         private void testCode()
         {
             var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "8888", 20, 5);
-            this.testCard.DataContext = zhaoshangCard;
+            var jiansheCard = new CreditCard(Bank.Jianshe, "1234", 5, 20);
+            var jiaotongCard = new CreditCard(Bank.Jiaotong, "2333", 25, 8);
+            var zhongxinCard = new CreditCard(Bank.Zhongxin, "6666", 10, 3);
+
+            var ccm = CreditCardManager.GetInstance();
+            ccm.AddCard(zhaoshangCard);
+            ccm.AddCard(jiansheCard);
+            ccm.AddCard(jiaotongCard);
+            ccm.AddCard(zhongxinCard);
+            this.lvCards.ItemsSource = ccm.GetAllCards();
         }
     }
 }

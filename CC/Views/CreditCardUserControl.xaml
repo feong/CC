@@ -12,11 +12,13 @@
     <UserControl.Resources>
         <local:BankToBankIconConverter x:Key="iconConverter"/>
         <local:BankToBankNameConverter x:Key="nameConverter"/>
+        <local:BankToBrushConverter x:Key="brushConverter"/>
         <local:DateToFormatDateConverter x:Key="dateConverter"/>
+        <local:LeftDaysToStringConverter x:Key="leftDaysConverter"/>
     </UserControl.Resources>
 
 
-    <Grid BorderBrush="Red" Background="Red" CornerRadius="8">
+    <Grid BorderBrush="Red" Background="{Binding Bank, Converter={StaticResource brushConverter}}" CornerRadius="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -61,12 +63,15 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentOrderDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
             <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CurrentPayDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
 
+            <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding LeftPayDays, Converter={StaticResource leftDaysConverter}}" Foreground="White" FontSize="12"/>
+            
             <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TotalFreeDays}" Foreground="White" FontSize="12"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="当前免息期：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>

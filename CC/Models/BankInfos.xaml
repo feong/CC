@@ -1,0 +1,62 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CC.Models">
+
+    <local:BankInfo x:Key="Baoshang" Bank="Baoshang" Title="包商银行" ImageName="Baoshang.png" Color="#FF0695A0"/>
+    <local:BankInfo x:Key="Beijing" Bank="Beijing" Title="北京银行" ImageName="Beijing.png" Color="#FFDD271E"/>
+
+    <local:BankInfo x:Key="Chengdunongshang" Bank="Chengdunongshang" Title="成都农商银行" ImageName="Chengdunongshang.png" Color="#FF04683D"/>
+    <local:BankInfo x:Key="Chongqing" Bank="Chongqing" Title="重庆银行" ImageName="Chongqing.png" Color="#FF06B56C"/>
+    <local:BankInfo x:Key="Chongqingnongshang" Bank="Chongqingnongshang" Title="重庆农村商业银行" ImageName="Chongqingnongshang.png" Color="#FFE40422"/>
+
+    <local:BankInfo x:Key="Gongshang" Bank="Gongshang" Title="工商银行" ImageName="Gongshang.png" Color="#FFC60506"/>
+    <local:BankInfo x:Key="Guangda" Bank="Guangda" Title="光大银行" ImageName="Guangda.png" Color="#FF59056B"/>
+    <local:BankInfo x:Key="Guangfa" Bank="Guangfa" Title="广发银行" ImageName="Guangfa.png" Color="#FFE90424"/>
+    <local:BankInfo x:Key="Guangzhou" Bank="Guangzhou" Title="广州银行" ImageName="Guangzhou.png" Color="#FFB1080C"/>
+
+    <!--color changed a little-->
+    <local:BankInfo x:Key="Haerbin" Bank="Haerbin" Title="哈尔滨银行" ImageName="Haerbin.png" Color="#FF7E0F72"/>
+    <local:BankInfo x:Key="Hangzhou" Bank="Hangzhou" Title="杭州银行" ImageName="Hangzhou.png" Color="#FF19A4E6"/>
+    <local:BankInfo x:Key="Hankou" Bank="Hankou" Title="汉口银行" ImageName="Hankou.png" Color="#FF44D1F3"/>
+    <local:BankInfo x:Key="Hebei" Bank="Hebei" Title="河北银行" ImageName="Hebei.png" Color="#FF096BA4"/>
+    <local:BankInfo x:Key="Huaxia" Bank="Huaxia" Title="华夏银行" ImageName="Huaxia.png" Color="#FFFF2C29"/>
+    <local:BankInfo x:Key="Huishang" Bank="Huishang" Title="徽商银行" ImageName="Huishang.png" Color="#FFEC262B"/>
+
+    <local:BankInfo x:Key="Jiangsu" Bank="Jiangsu" Title="江苏银行" ImageName="Jiangsu.png" Color="#FF2380CB"/>
+    <local:BankInfo x:Key="Jianshe" Bank="Jianshe" Title="建设银行" ImageName="Jianshe.png" Color="#FF1B52AA"/>
+    <local:BankInfo x:Key="Jiaotong" Bank="Jiaotong" Title="交通银行" ImageName="Jiaotong.png" Color="#FF043273"/>
+    <!--color changed a little end-->
+
+    <local:BankInfo x:Key="Minsheng" Bank="Minsheng" Title="民生银行" ImageName="Minsheng.png" Color="#FF089A83"/>
+
+    <local:BankInfo x:Key="Nanchang" Bank="Nanchang" Title="南昌银行" ImageName="Nanchang.png" Color="#FF049491"/>
+    <local:BankInfo x:Key="Nanjing" Bank="Nanjing" Title="南京银行" ImageName="Nanjing.png" Color="#FFCD0404"/>
+    <local:BankInfo x:Key="Ningbo" Bank="Ningbo" Title="宁波银行" ImageName="Ningbo.png" Color="#FFF3BD0F"/>
+    
+    <local:BankInfo x:Key="Nongye" Bank="Nongye" Title="农业银行" ImageName="Nongye.png" Color="#FF059889"/>
+
+    <local:BankInfo x:Key="Pingan" Bank="Pingan" Title="平安银行" ImageName="Pingan.png" Color="#FFEF5B22"/>
+    <local:BankInfo x:Key="Pufa" Bank="Pufa" Title="浦发银行" ImageName="Pufa.png" Color="#FF043572"/>
+
+    <local:BankInfo x:Key="Shanghai" Bank="Shanghai" Title="上海银行" ImageName="Shanghai.png" Color="#FFEDBB1C"/>
+    <local:BankInfo x:Key="Shanghainongshang" Bank="Shanghainongshang" Title="上海农商银行" ImageName="Shanghainongshang.png" Color="#FF04439D"/>
+    <local:BankInfo x:Key="Shangrao" Bank="Shangrao" Title="上饶银行" ImageName="Shangrao.png" Color="#FFF5AD04"/>
+    <local:BankInfo x:Key="Shengjing" Bank="Shengjing" Title="盛京银行" ImageName="Shengjing.png" Color="#FFE50411"/>
+
+    <local:BankInfo x:Key="Tianjing" Bank="Tianjing" Title="天津银行" ImageName="Tianjing.png" Color="#FF054BA4"/>
+
+    <local:BankInfo x:Key="Wenzhou" Bank="Wenzhou" Title="温州银行" ImageName="Wenzhou.png" Color="#FFFE9A04"/>
+    <local:BankInfo x:Key="Wulumuqishangye" Bank="Wulumuqishangye" Title="乌鲁木齐商业银行" ImageName="Wulumuqishangye.png" Color="#FF0D439E"/>
+
+    <local:BankInfo x:Key="Xingye" Bank="Xingye" Title="兴业银行" ImageName="Xingye.png" Color="#FF1F4686"/>
+
+    <local:BankInfo x:Key="Yaodunongshang" Bank="Yaodunongshang" Title="尧都农村商业银行" ImageName="Yaodunongshang.png" Color="#FF34822C"/>
+    <local:BankInfo x:Key="Youzheng" Bank="Youzheng" Title="中国邮政储蓄银行" ImageName="Youzheng.png" Color="#FF056744"/>
+
+    <local:BankInfo x:Key="Zhada" Bank="Zhada" Title="渣打银行" ImageName="Zhada.png" Color="#FF05993A"/>
+    <local:BankInfo x:Key="Zhaoshang" Bank="Zhaoshang" Title="招商银行" ImageName="Zhaoshang.png" Color="#FFD10404"/>
+    <local:BankInfo x:Key="Zhongguo" Bank="Zhongguo" Title="中国银行" ImageName="Zhongguo.png" Color="#FFAE0505"/>
+    <local:BankInfo x:Key="Zhongxin" Bank="Zhongxin" Title="中信银行" ImageName="Zhongxin.png" Color="#FFDF3324"/>
+    
+</ResourceDictionary>
