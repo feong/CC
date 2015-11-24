@@ -1,4 +1,5 @@
 ﻿using CC.Models;
+using CC.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,5 +29,10 @@ namespace CC
             this.InitializeComponent();
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
+            Frame.Navigate(typeof(TestPage));
+        }
     }
 }

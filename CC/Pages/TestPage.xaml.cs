@@ -44,7 +44,13 @@ namespace CC.Pages
             ccm.AddCard(jiansheCard);
             ccm.AddCard(jiaotongCard);
             ccm.AddCard(zhongxinCard);
-            this.lvCards.ItemsSource = ccm.GetAllCards();
+            this.gvCards.ItemsSource = ccm.GetAllCards();
+        }
+
+        private void SettingTapped(object sender, TappedRoutedEventArgs e)
+        {
+
+            Frame.Navigate(typeof(TestPage));
         }
     }
 }

@@ -8,6 +8,10 @@
     xmlns:v="using:CC.Views"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <v:VisibilityToBool x:Key="visibilityConverter"/>
+    </Page.Resources>
+
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -23,9 +27,9 @@
         </VisualStateManager.VisualStateGroups>
         <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemAccentColor}" OpenPaneLength="160">
             <SplitView.Pane>
-                <ListView Margin="0,48,0,0">
-                    <ListViewItem>
-                        <StackPanel Orientation="Horizontal" >
+                <ListView Margin="0,48,0,0" >
+                    <ListViewItem IsSelected="True" Background="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}">
+                        <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="DockBottom" Foreground="White" />
                             <TextBlock Text="卡片管理"
                                        Margin="24,0,0,0"
@@ -42,7 +46,7 @@
                                        Foreground="White" />
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem Tapped="SettingTapped">
                         <StackPanel Orientation="Horizontal" >
                             <SymbolIcon Symbol="Setting" Foreground="White" />
                             <TextBlock Text="通知设置"
@@ -54,21 +58,17 @@
                 </ListView>
             </SplitView.Pane>
 
-            <ListView x:Name="lvCards" HorizontalAlignment="Center" Margin="0,48,0,0">
-                <ListView.ItemTemplate>
+            <GridView x:Name="gvCards" HorizontalAlignment="Center" Margin="0,48,0,0">
+                <GridView.ItemTemplate>
                     <DataTemplate>
                         <v:CreditCardUserControl Margin="4"/>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <!--<StackPanel Margin="20">
-                <v:CreditCardUserControl x:Name="testCard"/>
-            </StackPanel>-->
+                </GridView.ItemTemplate>
+            </GridView>
+            
         </SplitView>
 
-        <ToggleButton x:Name="btnSVP"
-                      Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        <ToggleButton Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                       Background="Gold"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Top"
@@ -79,6 +79,22 @@
                 <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="24" />
             </ToggleButton.Content>
         </ToggleButton>
+
+        <Grid Background="Black" Opacity="0.5" Visibility="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay, Converter={StaticResource visibilityConverter}}"/>
+        
+        <Grid Width="48" Height="48" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20">
+            <Ellipse Fill="Gold" Opacity="0.8"/>
+            <SymbolIcon Symbol="Add" Foreground="White" Opacity="0.8"/>
+            <ToggleButton Opacity="0" Width="48" Height="48"
+                          IsChecked="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay}"/>
+        </Grid>
+
+        <SplitView x:Name="splitAddCardView" PaneBackground="Transparent" HorizontalAlignment="Right" VerticalAlignment="Bottom" OpenPaneLength="380" Height="260">
+            <SplitView.Pane>
+                <v:AddCreditCardUserControl/>
+            </SplitView.Pane>
+
+        </SplitView>
 
     </Grid>
 </Page>

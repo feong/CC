@@ -1,0 +1,171 @@
+﻿<UserControl
+    x:Class="CC.Views.AddCreditCardUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CC.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="using:CC.Models"
+    mc:Ignorable="d"
+    d:DesignHeight="260"
+    d:DesignWidth="380">
+    <UserControl.Resources>
+        <local:BankToBankIconConverter x:Key="iconConverter"/>
+        <local:BankToBankNameConverter x:Key="nameConverter"/>
+        <local:BankToBrushConverter x:Key="brushConverter"/>
+    </UserControl.Resources>
+
+    <StackPanel Background="{Binding SelectedItem.Bank, Converter={StaticResource brushConverter}, ElementName=comboBox}" CornerRadius="8">
+
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="40,20,40,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="银行" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <ComboBox x:Name="comboBox" Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" SelectedIndex="0" BorderBrush="#66000000">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Bank, Converter={StaticResource iconConverter}}" Width="20" Height="20"/>
+                            <TextBlock Text="{Binding Bank, Converter={StaticResource nameConverter}}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <m:BankInfo Bank="Baoshang"/>
+                <m:BankInfo Bank="Beijing"/>
+                <m:BankInfo Bank="Chengdunongshang"/>
+                <m:BankInfo Bank="Chongqingnongshang"/>
+                <m:BankInfo Bank="Gongshang"/>
+                <m:BankInfo Bank="Guangda"/>
+                <m:BankInfo Bank="Guangfa"/>
+                <m:BankInfo Bank="Guangzhou"/>
+                <m:BankInfo Bank="Haerbin"/>
+                <m:BankInfo Bank="Hangzhou"/>
+                <m:BankInfo Bank="Hankou"/>
+                <m:BankInfo Bank="Hebei"/>
+                <m:BankInfo Bank="Huaxia"/>
+                <m:BankInfo Bank="Huishang"/>
+                <m:BankInfo Bank="Jiangsu"/>
+                <m:BankInfo Bank="Jianshe"/>
+                <m:BankInfo Bank="Jiaotong"/>
+                <m:BankInfo Bank="Minsheng"/>
+                <m:BankInfo Bank="Nanchang"/>
+                <m:BankInfo Bank="Nanjing"/>
+                <m:BankInfo Bank="Ningbo"/>
+                <m:BankInfo Bank="Nongye"/>
+                <m:BankInfo Bank="Pingan"/>
+                <m:BankInfo Bank="Pufa"/>
+                <m:BankInfo Bank="Shanghai"/>
+                <m:BankInfo Bank="Shanghainongshang"/>
+                <m:BankInfo Bank="Shangrao"/>
+                <m:BankInfo Bank="Shengjing"/>
+                <m:BankInfo Bank="Tianjing"/>
+                <m:BankInfo Bank="Wenzhou"/>
+                <m:BankInfo Bank="Wulumuqishangye"/>
+                <m:BankInfo Bank="Xingye"/>
+                <m:BankInfo Bank="Yaodunongshang"/>
+                <m:BankInfo Bank="Youzheng"/>
+                <m:BankInfo Bank="Zhada"/>
+                <m:BankInfo Bank="Zhaoshang"/>
+                <m:BankInfo Bank="Zhongguo"/>
+                <m:BankInfo Bank="Zhongxin"/>
+            </ComboBox>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="卡片别名" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <TextBox Grid.Row="1" Grid.Column="1" MaxLength="10" Width="200" Background="Transparent" HorizontalAlignment="Left" Foreground="White" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="卡片后四位" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <TextBox Grid.Row="2" Grid.Column="1" InputScope="Number"  MaxLength="4" Width="200" Background="Transparent" HorizontalAlignment="Left" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}" Foreground="White" TextChanging="TextBox_TextChanging"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="帐单日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" Width="200" SelectedIndex="5" Foreground="White" Background="Transparent">
+                <x:Int32>1</x:Int32>
+                <x:Int32>2</x:Int32>
+                <x:Int32>3</x:Int32>
+                <x:Int32>4</x:Int32>
+                <x:Int32>5</x:Int32>
+                <x:Int32>6</x:Int32>
+                <x:Int32>7</x:Int32>
+                <x:Int32>8</x:Int32>
+                <x:Int32>9</x:Int32>
+                <x:Int32>10</x:Int32>
+                <x:Int32>11</x:Int32>
+                <x:Int32>12</x:Int32>
+                <x:Int32>13</x:Int32>
+                <x:Int32>14</x:Int32>
+                <x:Int32>15</x:Int32>
+                <x:Int32>16</x:Int32>
+                <x:Int32>17</x:Int32>
+                <x:Int32>18</x:Int32>
+                <x:Int32>19</x:Int32>
+                <x:Int32>20</x:Int32>
+                <x:Int32>21</x:Int32>
+                <x:Int32>22</x:Int32>
+                <x:Int32>23</x:Int32>
+                <x:Int32>24</x:Int32>
+                <x:Int32>25</x:Int32>
+                <x:Int32>26</x:Int32>
+                <x:Int32>27</x:Int32>
+                <x:Int32>28</x:Int32>
+                <x:Int32>29</x:Int32>
+                <x:Int32>30</x:Int32>
+                <x:Int32>31</x:Int32>
+            </ComboBox>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="还款日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" Width="200" SelectedIndex="22" Foreground="White" Background="Transparent">
+                <x:Int32>1</x:Int32>
+                <x:Int32>2</x:Int32>
+                <x:Int32>3</x:Int32>
+                <x:Int32>4</x:Int32>
+                <x:Int32>5</x:Int32>
+                <x:Int32>6</x:Int32>
+                <x:Int32>7</x:Int32>
+                <x:Int32>8</x:Int32>
+                <x:Int32>9</x:Int32>
+                <x:Int32>10</x:Int32>
+                <x:Int32>11</x:Int32>
+                <x:Int32>12</x:Int32>
+                <x:Int32>13</x:Int32>
+                <x:Int32>14</x:Int32>
+                <x:Int32>15</x:Int32>
+                <x:Int32>16</x:Int32>
+                <x:Int32>17</x:Int32>
+                <x:Int32>18</x:Int32>
+                <x:Int32>19</x:Int32>
+                <x:Int32>20</x:Int32>
+                <x:Int32>21</x:Int32>
+                <x:Int32>22</x:Int32>
+                <x:Int32>23</x:Int32>
+                <x:Int32>24</x:Int32>
+                <x:Int32>25</x:Int32>
+                <x:Int32>26</x:Int32>
+                <x:Int32>27</x:Int32>
+                <x:Int32>28</x:Int32>
+                <x:Int32>29</x:Int32>
+                <x:Int32>30</x:Int32>
+                <x:Int32>31</x:Int32>
+            </ComboBox>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="380" Height="40" Background="White" Opacity="0.4" HorizontalAlignment="Left"/>
+            <SymbolIcon Grid.Column="0" Symbol="Accept" Foreground="White"/>
+            <SymbolIcon Grid.Column="1" Symbol="Cancel" Foreground="White"/>
+        </Grid>
+    </StackPanel>
+</UserControl>
