@@ -41,12 +41,16 @@ namespace CC.Models
 
         public void AddCard(CreditCard card)
         {
-            this.cards.Add(card);
+            if (!this.cards.Contains(card))
+            {
+                this.cards.Add(card);
+            }
         }
 
         public void RemoveCard(CreditCard card)
         {
             this.cards.Remove(card);
         }
+        
     }
 }

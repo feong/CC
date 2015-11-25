@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="CC.Views.AddCreditCardUserControl"
+    x:Class="CC.Views.CreditCardEditorUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CC.Views"
@@ -13,9 +13,12 @@
         <local:BankToBankIconConverter x:Key="iconConverter"/>
         <local:BankToBankNameConverter x:Key="nameConverter"/>
         <local:BankToBrushConverter x:Key="brushConverter"/>
+
+        <local:BankToInt32Converter x:Key="bankConverter"/>
+        <local:DateToDayConverter x:Key="dateConverter"/>
     </UserControl.Resources>
 
-    <StackPanel Background="{Binding SelectedItem.Bank, Converter={StaticResource brushConverter}, ElementName=comboBox}" CornerRadius="8">
+    <StackPanel Background="{Binding SelectedIndex, Converter={StaticResource brushConverter}, ElementName=cbBank}" CornerRadius="8">
 
         <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="40,20,40,20">
             <Grid.RowDefinitions>
@@ -30,65 +33,66 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-
+            
             <TextBlock Grid.Row="0" Grid.Column="0" Text="银行" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox x:Name="comboBox" Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" SelectedIndex="0" BorderBrush="#66000000">
+            <ComboBox x:Name="cbBank" SelectedIndex="{Binding Card.Bank, Converter={StaticResource bankConverter}}"  Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" BorderBrush="#66000000">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Bank, Converter={StaticResource iconConverter}}" Width="20" Height="20"/>
-                            <TextBlock Text="{Binding Bank, Converter={StaticResource nameConverter}}" Margin="10,0,0,0"/>
+                            <Image Source="{Binding Converter={StaticResource iconConverter}}" Width="20" Height="20"/>
+                            <TextBlock Text="{Binding Converter={StaticResource nameConverter}}" Margin="10,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                <m:BankInfo Bank="Baoshang"/>
-                <m:BankInfo Bank="Beijing"/>
-                <m:BankInfo Bank="Chengdunongshang"/>
-                <m:BankInfo Bank="Chongqingnongshang"/>
-                <m:BankInfo Bank="Gongshang"/>
-                <m:BankInfo Bank="Guangda"/>
-                <m:BankInfo Bank="Guangfa"/>
-                <m:BankInfo Bank="Guangzhou"/>
-                <m:BankInfo Bank="Haerbin"/>
-                <m:BankInfo Bank="Hangzhou"/>
-                <m:BankInfo Bank="Hankou"/>
-                <m:BankInfo Bank="Hebei"/>
-                <m:BankInfo Bank="Huaxia"/>
-                <m:BankInfo Bank="Huishang"/>
-                <m:BankInfo Bank="Jiangsu"/>
-                <m:BankInfo Bank="Jianshe"/>
-                <m:BankInfo Bank="Jiaotong"/>
-                <m:BankInfo Bank="Minsheng"/>
-                <m:BankInfo Bank="Nanchang"/>
-                <m:BankInfo Bank="Nanjing"/>
-                <m:BankInfo Bank="Ningbo"/>
-                <m:BankInfo Bank="Nongye"/>
-                <m:BankInfo Bank="Pingan"/>
-                <m:BankInfo Bank="Pufa"/>
-                <m:BankInfo Bank="Shanghai"/>
-                <m:BankInfo Bank="Shanghainongshang"/>
-                <m:BankInfo Bank="Shangrao"/>
-                <m:BankInfo Bank="Shengjing"/>
-                <m:BankInfo Bank="Tianjing"/>
-                <m:BankInfo Bank="Wenzhou"/>
-                <m:BankInfo Bank="Wulumuqishangye"/>
-                <m:BankInfo Bank="Xingye"/>
-                <m:BankInfo Bank="Yaodunongshang"/>
-                <m:BankInfo Bank="Youzheng"/>
-                <m:BankInfo Bank="Zhada"/>
-                <m:BankInfo Bank="Zhaoshang"/>
-                <m:BankInfo Bank="Zhongguo"/>
-                <m:BankInfo Bank="Zhongxin"/>
+                <m:Bank>Baoshang</m:Bank>
+                <m:Bank>Beijing</m:Bank>
+                <m:Bank>Chengdunongshang</m:Bank>
+                <m:Bank>Chongqing</m:Bank>
+                <m:Bank>Chongqingnongshang</m:Bank>
+                <m:Bank>Gongshang</m:Bank>
+                <m:Bank>Guangda</m:Bank>
+                <m:Bank>Guangfa</m:Bank>
+                <m:Bank>Guangzhou</m:Bank>
+                <m:Bank>Haerbin</m:Bank>
+                <m:Bank>Hangzhou</m:Bank>
+                <m:Bank>Hankou</m:Bank>
+                <m:Bank>Hebei</m:Bank>
+                <m:Bank>Huaxia</m:Bank>
+                <m:Bank>Huishang</m:Bank>
+                <m:Bank>Jiangsu</m:Bank>
+                <m:Bank>Jianshe</m:Bank>
+                <m:Bank>Jiaotong</m:Bank>
+                <m:Bank>Minsheng</m:Bank>
+                <m:Bank>Nanchang</m:Bank>
+                <m:Bank>Nanjing</m:Bank>
+                <m:Bank>Ningbo</m:Bank>
+                <m:Bank>Nongye</m:Bank>
+                <m:Bank>Pingan</m:Bank>
+                <m:Bank>Pufa</m:Bank>
+                <m:Bank>Shanghai</m:Bank>
+                <m:Bank>Shanghainongshang</m:Bank>
+                <m:Bank>Shangrao</m:Bank>
+                <m:Bank>Shengjing</m:Bank>
+                <m:Bank>Tianjing</m:Bank>
+                <m:Bank>Wenzhou</m:Bank>
+                <m:Bank>Wulumuqishangye</m:Bank>
+                <m:Bank>Xingye</m:Bank>
+                <m:Bank>Yaodunongshang</m:Bank>
+                <m:Bank>Youzheng</m:Bank>
+                <m:Bank>Zhada</m:Bank>
+                <m:Bank>Zhaoshang</m:Bank>
+                <m:Bank>Zhongguo</m:Bank>
+                <m:Bank>Zhongxin</m:Bank>
             </ComboBox>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="卡片别名" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <TextBox Grid.Row="1" Grid.Column="1" MaxLength="10" Width="200" Background="Transparent" HorizontalAlignment="Left" Foreground="White" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}"/>
+            <TextBox x:Name="tbNickname" Grid.Row="1" Grid.Column="1" MaxLength="10" Width="200" Background="Transparent" HorizontalAlignment="Left" Foreground="White" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="卡片后四位" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <TextBox Grid.Row="2" Grid.Column="1" InputScope="Number"  MaxLength="4" Width="200" Background="Transparent" HorizontalAlignment="Left" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}" Foreground="White" TextChanging="TextBox_TextChanging"/>
+            <TextBox x:Name="tbNO" Grid.Row="2" Grid.Column="1" Text="{Binding Card.NO}" InputScope="Number"  MaxLength="4" Width="200" Background="Transparent" HorizontalAlignment="Left" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}" Foreground="White" TextChanging="TextBox_TextChanging"/>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Text="帐单日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox Grid.Row="3" Grid.Column="1" Width="200" SelectedIndex="5" Foreground="White" Background="Transparent">
+            <ComboBox x:Name="cbOrderDay" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Card, Converter={StaticResource dateConverter}, ConverterParameter=OrderDay}" Width="200" Foreground="White" Background="Transparent">
                 <x:Int32>1</x:Int32>
                 <x:Int32>2</x:Int32>
                 <x:Int32>3</x:Int32>
@@ -123,7 +127,7 @@
             </ComboBox>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="还款日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" Width="200" SelectedIndex="22" Foreground="White" Background="Transparent">
+            <ComboBox x:Name="cbPayDay" Grid.Row="4" Grid.Column="1" SelectedItem="{Binding Card, Converter={StaticResource dateConverter}, ConverterParameter=PayDay}" Width="200" Foreground="White" Background="Transparent">
                 <x:Int32>1</x:Int32>
                 <x:Int32>2</x:Int32>
                 <x:Int32>3</x:Int32>
@@ -164,8 +168,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="380" Height="40" Background="White" Opacity="0.4" HorizontalAlignment="Left"/>
-            <SymbolIcon Grid.Column="0" Symbol="Accept" Foreground="White"/>
-            <SymbolIcon Grid.Column="1" Symbol="Cancel" Foreground="White"/>
+            <SymbolIcon Grid.Column="0" Symbol="Accept" Foreground="White" Tapped="AcceptTapped"/>
+            <SymbolIcon Grid.Column="1" Symbol="Cancel" Foreground="White" Tapped="CancelTapped"/>
         </Grid>
+        <Grid Height="16"/>
     </StackPanel>
 </UserControl>

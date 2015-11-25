@@ -24,6 +24,9 @@ namespace CC.Pages
     /// </summary>
     public sealed partial class TestPage : Page
     {
+
+        //private CreditCardEditor cce = new CreditCardEditor();
+
         public TestPage()
         {
             this.InitializeComponent();
@@ -34,23 +37,51 @@ namespace CC.Pages
 
         private void testCode()
         {
-            var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "8888", 20, 5);
-            var jiansheCard = new CreditCard(Bank.Jianshe, "1234", 5, 20);
-            var jiaotongCard = new CreditCard(Bank.Jiaotong, "2333", 25, 8);
-            var zhongxinCard = new CreditCard(Bank.Zhongxin, "6666", 10, 3);
+            //var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "8888", 20, 5);
+            //var jiansheCard = new CreditCard(Bank.Jianshe, "1234", 5, 20);
+            //var jiaotongCard = new CreditCard(Bank.Jiaotong, "2333", 25, 8);
+            //var zhongxinCard = new CreditCard(Bank.Zhongxin, "6666", 10, 3);
 
             var ccm = CreditCardManager.GetInstance();
-            ccm.AddCard(zhaoshangCard);
-            ccm.AddCard(jiansheCard);
-            ccm.AddCard(jiaotongCard);
-            ccm.AddCard(zhongxinCard);
+            //ccm.AddCard(zhaoshangCard);
+            //ccm.AddCard(jiansheCard);
+            //ccm.AddCard(jiaotongCard);
+            //ccm.AddCard(zhongxinCard);
             this.gvCards.ItemsSource = ccm.GetAllCards();
+
+            var cce = new CreditCardEditor()
+            {
+                Status = Status.OK,
+                Card = CreditCard.DefaultCard
+            };
+            this.splitAddCardView.DataContext = cce;
         }
 
         private void SettingTapped(object sender, TappedRoutedEventArgs e)
         {
 
             Frame.Navigate(typeof(TestPage));
+        }
+
+        private void AddToggleButtonChecked(object sender, RoutedEventArgs e)
+        {
+            var cce = new CreditCardEditor()
+            {
+                Status = Status.Adding,
+                Card = CreditCard.DefaultCard
+            };
+            this.splitAddCardView.DataContext = cce;
+        }
+        
+        private void CreditCardTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var gridView = sender as GridView;
+            var cce = new CreditCardEditor()
+            {
+                Status = Status.Editing,
+                Card = gridView.SelectedItem as CreditCard
+            };
+            this.splitAddCardView.DataContext = cce;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 
 namespace CC.Models
@@ -24,8 +25,13 @@ namespace CC.Models
     class BankInfo
     {
         private static Uri baseUri = new Uri(@"ms-appx:///Assets/BankIcons/");
-        public static Uri DefaultUri = new Uri(baseUri, @"Nanchang.png");
-        public static String DefaultTitle = @"南昌银行";
+        public static BankInfo DefaultBankInfo = new BankInfo
+        {
+            Bank = Bank.Nanchang,
+            Title = "南昌银行",
+            ImageName = "Nanchang.png",
+            Color = new SolidColorBrush(Colors.Green)
+        };
 
         public Bank Bank { get; set; }
         public String Title { get; set; }

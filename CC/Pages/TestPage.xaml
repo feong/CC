@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="page"
     x:Class="CC.Pages.TestPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,7 +9,8 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <v:VisibilityToBool x:Key="visibilityConverter"/>
+        <v:StatusToBoolConverter x:Key="editorConverter"/>
+        <v:VisibilityToBoolConverter x:Key="visibilityConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -58,14 +59,16 @@
                 </ListView>
             </SplitView.Pane>
 
-            <GridView x:Name="gvCards" HorizontalAlignment="Center" Margin="0,48,0,0">
+            <GridView x:Name="gvCards" HorizontalAlignment="Center" Margin="0,48,0,0" Tapped="CreditCardTapped">
                 <GridView.ItemTemplate>
                     <DataTemplate>
-                        <v:CreditCardUserControl Margin="4"/>
+                        <Viewbox MaxWidth="400">
+                            <v:CreditCardUserControl Margin="4"/>
+                        </Viewbox>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
-            
+
         </SplitView>
 
         <ToggleButton Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -81,19 +84,19 @@
         </ToggleButton>
 
         <Grid Background="Black" Opacity="0.5" Visibility="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay, Converter={StaticResource visibilityConverter}}"/>
-        
+
         <Grid Width="48" Height="48" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20">
             <Ellipse Fill="Gold" Opacity="0.8"/>
             <SymbolIcon Symbol="Add" Foreground="White" Opacity="0.8"/>
             <ToggleButton Opacity="0" Width="48" Height="48"
-                          IsChecked="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay}"/>
+                          IsChecked="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay}"
+                          Checked="AddToggleButtonChecked"/>
         </Grid>
 
-        <SplitView x:Name="splitAddCardView" PaneBackground="Transparent" HorizontalAlignment="Right" VerticalAlignment="Bottom" OpenPaneLength="380" Height="260">
+        <SplitView x:Name="splitAddCardView" IsPaneOpen="{Binding Status, Converter={StaticResource editorConverter}, Mode=TwoWay}" PaneBackground="Transparent" HorizontalAlignment="Right" VerticalAlignment="Bottom" OpenPaneLength="380" Height="260">
             <SplitView.Pane>
-                <v:AddCreditCardUserControl/>
+                <v:CreditCardEditorUserControl/>
             </SplitView.Pane>
-
         </SplitView>
 
     </Grid>

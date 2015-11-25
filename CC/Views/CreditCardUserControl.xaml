@@ -14,7 +14,7 @@
         <local:BankToBankNameConverter x:Key="nameConverter"/>
         <local:BankToBrushConverter x:Key="brushConverter"/>
         <local:DateToFormatDateConverter x:Key="dateConverter"/>
-        <local:LeftDaysToStringConverter x:Key="leftDaysConverter"/>
+        <local:CardToDayConverter x:Key="dayConverter"/>
     </UserControl.Resources>
 
 
@@ -35,7 +35,10 @@
                     <ImageBrush Stretch="Fill" ImageSource="{Binding Bank, Converter={StaticResource iconConverter}}"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <TextBlock Grid.Column="1" Text="{Binding Bank, Converter={StaticResource nameConverter}}" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Grid.Column="1" Text="{Binding Bank, Converter={StaticResource nameConverter}}" Foreground="White" FontSize="16"/>
+                <TextBlock Grid.Column="1" Text="{Binding NickName}" Foreground="White" FontSize="10" Opacity="0.8"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -57,92 +60,27 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentOrderDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding CurrentPayDate, Converter={StaticResource dateConverter}}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="本期帐单日：" Foreground="White" FontSize="12" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Converter={StaticResource dateConverter}, ConverterParameter=OrderDay}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="还款日：" Foreground="White" FontSize="12" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Converter={StaticResource dateConverter}, ConverterParameter=PayDay}" Foreground="White" FontSize="12"/>
 
-            <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding LeftPayDays, Converter={StaticResource leftDaysConverter}}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="今日消费免息期：" Foreground="White" FontSize="12" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Converter={StaticResource dayConverter}, ConverterParameter=Current}" Foreground="White" FontSize="12"/>
             
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding TotalFreeDays}" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="当前免息期：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentFreeDays}" Foreground="White" FontSize="12"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="距下期最长免息期：" Foreground="White" FontSize="12" HorizontalAlignment="Right"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Converter={StaticResource dayConverter}, ConverterParameter=Next}" Foreground="White" FontSize="12"/>
 
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="当前用卡次数：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding UsedTimes}" Foreground="White" FontSize="12"/>
+            <!--<TextBlock Grid.Row="3" Grid.Column="2" Text="当前用卡次数：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
+            <TextBlock Grid.Row="3" Grid.Column="3" Text="{Binding UsedTimes}" Foreground="White" FontSize="12"/>-->
         </Grid>
 
     </Grid>
 
-
-    <!--<Grid BorderBrush="Red" Background="Red" CornerRadius="8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Ellipse Grid.Column="0" Height="50" Width="50" StrokeThickness="0" Margin="10,10,20,10">
-                <Ellipse.Fill>
-                    <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/BankIcons/zhaoshang.png"/>
-                </Ellipse.Fill>
-            </Ellipse>
-            <TextBlock Grid.Column="1" Text="招商银行" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
-        </Grid>
-
-        <Grid Grid.Row="1">
-            <Grid Background="White" Opacity="0.4"/>
-            <Grid HorizontalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="**** **** **** ****" Foreground="White" FontSize="38" Margin="0,0,10,0"/>
-                <TextBlock Grid.Column="1" Text="8888" Foreground="White" FontSize="28"/>
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="2"/>
-        
-        <Grid Grid.Row="3" HorizontalAlignment="Right" Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="帐单日：" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="20" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="0" Grid.Column="2" Text="还款日：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="5" Foreground="White" FontSize="12"/>
-
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="最长免息期：" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="47" Foreground="White" FontSize="12"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="当前免息期：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="31" Foreground="White" FontSize="12"/>
-
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="当前用卡次数：" Foreground="White" FontSize="12" Margin="20,0,0,0"/>
-            <TextBlock Grid.Row="2" Grid.Column="3" Text="12" Foreground="White" FontSize="12"/>
-        </Grid>
-
-    </Grid>-->
 </UserControl>

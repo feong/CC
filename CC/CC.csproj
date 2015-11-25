@@ -99,6 +99,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Models\CreditCardEditor.cs" />
     <Compile Include="Models\CreditCardManager.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -109,8 +111,8 @@
       <DependentUpon>TestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\AddCreditCardUserControl.xaml.cs">
-      <DependentUpon>AddCreditCardUserControl.xaml</DependentUpon>
+    <Compile Include="Views\CreditCardEditorUserControl.xaml.cs">
+      <DependentUpon>CreditCardEditorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreditCardToUserControlConverter.cs" />
     <Compile Include="Views\CreditCardUserControl.xaml.cs">
@@ -190,7 +192,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AddCreditCardUserControl.xaml">
+    <Page Include="Views\CreditCardEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
