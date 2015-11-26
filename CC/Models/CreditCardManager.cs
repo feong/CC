@@ -47,10 +47,21 @@ namespace CC.Models
             }
         }
 
+        public void ReplaceCard(CreditCard oldCard, CreditCard newCard)
+        {
+            if (this.cards.Contains(oldCard))
+            {
+                var index = this.cards.IndexOf(oldCard);
+                this.cards.Insert(index, newCard);
+                this.cards.Remove(oldCard);
+            }
+        }
+
         public void RemoveCard(CreditCard card)
         {
             this.cards.Remove(card);
         }
         
+
     }
 }

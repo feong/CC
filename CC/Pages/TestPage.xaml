@@ -83,16 +83,13 @@
             </ToggleButton.Content>
         </ToggleButton>
 
-        <Grid Background="Black" Opacity="0.5" Visibility="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay, Converter={StaticResource visibilityConverter}}"/>
-
         <Grid Width="48" Height="48" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,20">
             <Ellipse Fill="Gold" Opacity="0.8"/>
             <SymbolIcon Symbol="Add" Foreground="White" Opacity="0.8"/>
-            <ToggleButton Opacity="0" Width="48" Height="48"
-                          IsChecked="{Binding IsPaneOpen, ElementName=splitAddCardView, Mode=TwoWay}"
-                          Checked="AddToggleButtonChecked"/>
+            <Button Opacity="0" Width="48" Height="48" Tapped="AddButtonTapped"/>
         </Grid>
 
+        <Grid Background="Black" Opacity="0.5" Visibility="{Binding IsPaneOpen, ElementName=splitAddCardView, Converter={StaticResource visibilityConverter}}"/>
         <SplitView x:Name="splitAddCardView" IsPaneOpen="{Binding Status, Converter={StaticResource editorConverter}, Mode=TwoWay}" PaneBackground="Transparent" HorizontalAlignment="Right" VerticalAlignment="Bottom" OpenPaneLength="380" Height="260">
             <SplitView.Pane>
                 <v:CreditCardEditorUserControl/>

@@ -106,5 +106,10 @@ namespace CC.Models
             var other = obj as CreditCard;
             return this.Bank == other.Bank && this.NickName == other.NickName && this.NO == other.NO && this.OrderDay == other.OrderDay && this.PayDay == other.PayDay;
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace CC.Pages
     public sealed partial class TestPage : Page
     {
 
-        //private CreditCardEditor cce = new CreditCardEditor();
+        private CreditCardEditor cce = new CreditCardEditor();
 
         public TestPage()
         {
@@ -37,10 +37,10 @@ namespace CC.Pages
 
         private void testCode()
         {
-            //var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "8888", 20, 5);
-            //var jiansheCard = new CreditCard(Bank.Jianshe, "1234", 5, 20);
-            //var jiaotongCard = new CreditCard(Bank.Jiaotong, "2333", 25, 8);
-            //var zhongxinCard = new CreditCard(Bank.Zhongxin, "6666", 10, 3);
+            //var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "", "8888", 20, 5);
+            //var jiansheCard = new CreditCard(Bank.Jianshe, "", "1234", 5, 20);
+            //var jiaotongCard = new CreditCard(Bank.Jiaotong, "", "2333", 25, 8);
+            //var zhongxinCard = new CreditCard(Bank.Zhongxin, "", "6666", 10, 3);
 
             var ccm = CreditCardManager.GetInstance();
             //ccm.AddCard(zhaoshangCard);
@@ -49,7 +49,7 @@ namespace CC.Pages
             //ccm.AddCard(zhongxinCard);
             this.gvCards.ItemsSource = ccm.GetAllCards();
 
-            var cce = new CreditCardEditor()
+            cce = new CreditCardEditor()
             {
                 Status = Status.OK,
                 Card = CreditCard.DefaultCard
@@ -62,26 +62,23 @@ namespace CC.Pages
 
             Frame.Navigate(typeof(TestPage));
         }
-
-        private void AddToggleButtonChecked(object sender, RoutedEventArgs e)
-        {
-            var cce = new CreditCardEditor()
-            {
-                Status = Status.Adding,
-                Card = CreditCard.DefaultCard
-            };
-            this.splitAddCardView.DataContext = cce;
-        }
-        
+                
         private void CreditCardTapped(object sender, TappedRoutedEventArgs e)
         {
             var gridView = sender as GridView;
-            var cce = new CreditCardEditor()
+            var card = gridView.SelectedItem as CreditCard;
+            if (card != null)
             {
-                Status = Status.Editing,
-                Card = gridView.SelectedItem as CreditCard
-            };
-            this.splitAddCardView.DataContext = cce;
+                cce.Card = card;
+                cce.Status = Status.Editing;
+            }
+
+        }
+
+        private void AddButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            cce.Status = Status.Adding;
+            cce.Card = CreditCard.DefaultCard;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
@@ -20,7 +21,7 @@ namespace CC.Views
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return (int)value;
         }
     }
 
@@ -192,6 +193,29 @@ namespace CC.Views
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return (bool)value ? Status.Unkown : Status.OK;
+        }
+    }
+
+    public class StatusToSymbolConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            Status status = (Status)value;
+            Symbol symbol = Symbol.Back;
+            if (status == Status.Adding)
+            {
+                symbol = (parameter as String) == "Left" ? Symbol.Accept : Symbol.Cancel;
+            }
+            else if (status == Status.Editing)
+            {
+                symbol = (parameter as String) == "Left" ? Symbol.Edit : Symbol.Delete;
+            }
+            return symbol;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
         }
     }
 }

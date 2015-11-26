@@ -16,6 +16,8 @@
 
         <local:BankToInt32Converter x:Key="bankConverter"/>
         <local:DateToDayConverter x:Key="dateConverter"/>
+
+        <local:StatusToSymbolConverter x:Key="symbolConverter"/>
     </UserControl.Resources>
 
     <StackPanel Background="{Binding SelectedIndex, Converter={StaticResource brushConverter}, ElementName=cbBank}" CornerRadius="8">
@@ -33,9 +35,8 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            
             <TextBlock Grid.Row="0" Grid.Column="0" Text="银行" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox x:Name="cbBank" SelectedIndex="{Binding Card.Bank, Converter={StaticResource bankConverter}}"  Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" BorderBrush="#66000000">
+            <ComboBox x:Name="cbBank" SelectedValue="{Binding Card.Bank, Converter={StaticResource bankConverter}, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" BorderBrush="#66000000">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -44,7 +45,46 @@
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-                <m:Bank>Baoshang</m:Bank>
+                <x:Int32>0</x:Int32>
+                <x:Int32>1</x:Int32>
+                <x:Int32>2</x:Int32>
+                <x:Int32>3</x:Int32>
+                <x:Int32>4</x:Int32>
+                <x:Int32>5</x:Int32>
+                <x:Int32>6</x:Int32>
+                <x:Int32>7</x:Int32>
+                <x:Int32>8</x:Int32>
+                <x:Int32>9</x:Int32>
+                <x:Int32>10</x:Int32>
+                <x:Int32>11</x:Int32>
+                <x:Int32>12</x:Int32>
+                <x:Int32>13</x:Int32>
+                <x:Int32>14</x:Int32>
+                <x:Int32>15</x:Int32>
+                <x:Int32>16</x:Int32>
+                <x:Int32>17</x:Int32>
+                <x:Int32>18</x:Int32>
+                <x:Int32>19</x:Int32>
+                <x:Int32>20</x:Int32>
+                <x:Int32>21</x:Int32>
+                <x:Int32>22</x:Int32>
+                <x:Int32>23</x:Int32>
+                <x:Int32>24</x:Int32>
+                <x:Int32>25</x:Int32>
+                <x:Int32>26</x:Int32>
+                <x:Int32>27</x:Int32>
+                <x:Int32>28</x:Int32>
+                <x:Int32>29</x:Int32>
+                <x:Int32>30</x:Int32>
+                <x:Int32>31</x:Int32>
+                <x:Int32>32</x:Int32>
+                <x:Int32>33</x:Int32>
+                <x:Int32>34</x:Int32>
+                <x:Int32>35</x:Int32>
+                <x:Int32>36</x:Int32>
+                <x:Int32>37</x:Int32>
+                <x:Int32>38</x:Int32>
+                <!--<m:Bank>Baoshang</m:Bank>
                 <m:Bank>Beijing</m:Bank>
                 <m:Bank>Chengdunongshang</m:Bank>
                 <m:Bank>Chongqing</m:Bank>
@@ -82,7 +122,7 @@
                 <m:Bank>Zhada</m:Bank>
                 <m:Bank>Zhaoshang</m:Bank>
                 <m:Bank>Zhongguo</m:Bank>
-                <m:Bank>Zhongxin</m:Bank>
+                <m:Bank>Zhongxin</m:Bank>-->
             </ComboBox>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="卡片别名" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
@@ -168,8 +208,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Grid.ColumnSpan="2" Width="380" Height="40" Background="White" Opacity="0.4" HorizontalAlignment="Left"/>
-            <SymbolIcon Grid.Column="0" Symbol="Accept" Foreground="White" Tapped="AcceptTapped"/>
-            <SymbolIcon Grid.Column="1" Symbol="Cancel" Foreground="White" Tapped="CancelTapped"/>
+            <SymbolIcon Grid.Column="0" Symbol="{Binding Status, Converter={StaticResource symbolConverter}, ConverterParameter=Left}" Foreground="White" Tapped="LeftTapped"/>
+            <SymbolIcon Grid.Column="1" Symbol="{Binding Status, Converter={StaticResource symbolConverter}}" Foreground="White" Tapped="RightTapped"/>
         </Grid>
         <Grid Height="16"/>
     </StackPanel>

@@ -13,7 +13,7 @@ namespace CC.Models
         Editing,
         Deleting,
         OK,
-        Unkown,
+        Unkown
     }
 
     class CreditCardEditor:BindableBase
