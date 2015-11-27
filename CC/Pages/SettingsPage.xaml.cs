@@ -1,6 +1,4 @@
-﻿using CC.Models;
-using CC.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,24 +13,34 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-//“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
+// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
-namespace CC
+namespace CC.Pages
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class SettingsPage : Page
     {
-        public MainPage()
+        public SettingsPage()
         {
             this.InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        #region Navigation
+        
+        private void CardsPageTapped(object sender, TappedRoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CardsPage));
+        }
+
+        private void TipsPageTapped(object sender, TappedRoutedEventArgs e)
         {
 
-            Frame.Navigate(typeof(TestPage));
+            Frame.Navigate(typeof(TipsPage));
         }
+
+        #endregion
+
     }
 }

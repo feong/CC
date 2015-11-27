@@ -1,25 +1,86 @@
-﻿using CC.Models;
+﻿using CC.Common;
+using CC.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CC.Views
 {
+
+    enum Status
+    {
+        Adding,
+        Editing,
+        Deleting,
+        OK,
+        Unkown
+    }
+
+    class CreditCardEditor : BindableBase
+    {
+        public CreditCard OrignalCard { get; set; }
+
+        private Status status;
+        public Status Status
+        {
+            get { return this.status; }
+            set { this.SetProperty(ref this.status, value); }
+        }
+
+        private Bank bank;
+        public Bank Bank
+        {
+            get { return this.bank; }
+            set { this.SetProperty(ref this.bank, value); }
+        }
+
+        private String nickName;
+        public String NickName
+        {
+            get { return nickName; }
+            set { this.SetProperty(ref this.nickName, value); }
+        }
+
+        private String no;
+        public String NO
+        {
+            get { return no; }
+            set { this.SetProperty(ref this.no, value); }
+        }
+
+        private int orderDay;
+        public int OrderDay
+        {
+            get { return orderDay; }
+            set { this.SetProperty(ref this.orderDay, value); }
+        }
+
+        private int payDay;
+        public int PayDay
+        {
+            get { return payDay; }
+            set { this.SetProperty(ref this.payDay, value); }
+        }
+
+        public void setEditor(Status status, CreditCard card)
+        {
+            this.OrignalCard = card;
+            this.Status = status;
+            this.Bank = card.Bank;
+            this.NickName = card.NickName;
+            this.NO = card.NO;
+            this.OrderDay = card.OrderDay;
+            this.PayDay = card.PayDay;
+        }
+    }
+
+
     public sealed partial class CreditCardEditorUserControl : UserControl
     {
         public CreditCardEditorUserControl()
@@ -66,7 +127,6 @@ namespace CC.Views
                     else
                     {
                         CreditCardManager.GetInstance().AddCard(card);
-                        //cce.Card = card;
                         cce.Status = Status.OK;
                     }
                 }
@@ -81,7 +141,7 @@ namespace CC.Views
                         MessageDialog md = new MessageDialog("确定要修改卡片信息吗？", "询问");
                         md.Commands.Add(new UICommand("确定", cmd =>
                         {
-                            CreditCardManager.GetInstance().ReplaceCard(cce.Card, card);
+                            CreditCardManager.GetInstance().ReplaceCard(cce.OrignalCard, card);
                             cce.Status = Status.OK;
                         }, 0));
                         md.Commands.Add(new UICommand("放弃", cmd =>
@@ -109,7 +169,7 @@ namespace CC.Views
                 MessageDialog md = new MessageDialog("确定要删除卡片吗？", "询问");
                 md.Commands.Add(new UICommand("确定", cmd =>
                 {
-                    CreditCardManager.GetInstance().RemoveCard(cce.Card);
+                    CreditCardManager.GetInstance().RemoveCard(cce.OrignalCard);
                     cce.Status = Status.OK;
                 }, 0));
                 md.Commands.Add(new UICommand("放弃", cmd =>

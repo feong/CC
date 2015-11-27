@@ -100,15 +100,17 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="Models\CreditCardEditor.cs" />
     <Compile Include="Models\CreditCardManager.cs" />
-    <Compile Include="Pages\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Pages\CardsPage.xaml.cs">
+      <DependentUpon>CardsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\BankInfo.cs" />
     <Compile Include="Models\CreditCard.cs" />
-    <Compile Include="Pages\TestPage.xaml.cs">
-      <DependentUpon>TestPage.xaml</DependentUpon>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TipsPage.xaml.cs">
+      <DependentUpon>TipsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CreditCardEditorUserControl.xaml.cs">
@@ -184,13 +186,17 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\CardsPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TestPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TipsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreditCardEditorUserControl.xaml">
       <SubType>Designer</SubType>

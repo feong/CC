@@ -9,10 +9,9 @@ namespace CC.Models
         public Bank Bank { get; private set; }
         public string NickName { get; private set; }
         public string NO { get; private set; }
+        public int OrderDay { get; private set; }
+        public int PayDay { get; private set; }
         public int UsedTimes { get; private set; }
-        
-        private int OrderDay { get; set; }
-        private int PayDay { get; set; }
 
         public CreditCard(Bank bank, String nickName, String no, int orderDay, int payDay)
         {
@@ -104,7 +103,7 @@ namespace CC.Models
             if (base.Equals(obj)) return true;
 
             var other = obj as CreditCard;
-            return this.Bank == other.Bank && this.NickName == other.NickName && this.NO == other.NO && this.OrderDay == other.OrderDay && this.PayDay == other.PayDay;
+            return this.Bank == other.Bank && this.NO == other.NO && this.OrderDay == other.OrderDay && this.PayDay == other.PayDay;
         }
 
         public override int GetHashCode()

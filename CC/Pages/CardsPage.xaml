@@ -1,5 +1,5 @@
-﻿<Page x:Name="page"
-    x:Class="CC.Pages.TestPage"
+﻿<Page
+    x:Class="CC.Pages.CardsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CC.Pages"
@@ -26,9 +26,10 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        
         <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemAccentColor}" OpenPaneLength="160">
             <SplitView.Pane>
-                <ListView Margin="0,48,0,0" >
+                <ListView Margin="0,48,0,0">
                     <ListViewItem IsSelected="True" Background="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Symbol="DockBottom" Foreground="White" />
@@ -38,7 +39,7 @@
                                        Foreground="White" />
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem>
+                    <ListViewItem Tapped="TipsPageTapped">
                         <StackPanel Orientation="Horizontal" >
                             <SymbolIcon Symbol="Like" Foreground="White" />
                             <TextBlock Text="用卡技巧"
@@ -47,7 +48,7 @@
                                        Foreground="White" />
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Tapped="SettingTapped">
+                    <ListViewItem Tapped="SettingsPageTapped">
                         <StackPanel Orientation="Horizontal" >
                             <SymbolIcon Symbol="Setting" Foreground="White" />
                             <TextBlock Text="通知设置"
@@ -59,18 +60,17 @@
                 </ListView>
             </SplitView.Pane>
 
-            <GridView x:Name="gvCards" HorizontalAlignment="Center" Margin="0,48,0,0" Tapped="CreditCardTapped">
+            <GridView x:Name="gvCards" HorizontalAlignment="Center" Margin="0,48,0,0" CanReorderItems="True" AllowDrop="True">
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <Viewbox MaxWidth="400">
-                            <v:CreditCardUserControl Margin="4"/>
+                            <v:CreditCardUserControl Margin="4" Tapped="CreditCardTapped"/>
                         </Viewbox>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
 
         </SplitView>
-
         <ToggleButton Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                       Background="Gold"
                       HorizontalAlignment="Left"
@@ -79,7 +79,7 @@
                       Height="48"
                       IsChecked="{Binding IsPaneOpen, ElementName=splitView, Mode=TwoWay}">
             <ToggleButton.Content>
-                <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="24" />
+                <TextBlock Text="&#xE700;" FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="White"/>
             </ToggleButton.Content>
         </ToggleButton>
 

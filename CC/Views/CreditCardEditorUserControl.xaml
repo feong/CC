@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="银行" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox x:Name="cbBank" SelectedValue="{Binding Card.Bank, Converter={StaticResource bankConverter}, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" BorderBrush="#66000000">
+            <ComboBox x:Name="cbBank" SelectedValue="{Binding Bank, Converter={StaticResource bankConverter}, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Width="200" Background="Transparent" Foreground="White" BorderBrush="#66000000">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -126,13 +126,13 @@
             </ComboBox>
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="卡片别名" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <TextBox x:Name="tbNickname" Grid.Row="1" Grid.Column="1" MaxLength="10" Width="200" Background="Transparent" HorizontalAlignment="Left" Foreground="White" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}"/>
+            <TextBox x:Name="tbNickname" Grid.Row="1" Grid.Column="1" Text="{Binding NickName, Mode=TwoWay}" MaxLength="20" Width="200" Background="Transparent" HorizontalAlignment="Left" Foreground="White" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="卡片后四位" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <TextBox x:Name="tbNO" Grid.Row="2" Grid.Column="1" Text="{Binding Card.NO}" InputScope="Number"  MaxLength="4" Width="200" Background="Transparent" HorizontalAlignment="Left" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}" Foreground="White" TextChanging="TextBox_TextChanging"/>
+            <TextBox x:Name="tbNO" Grid.Row="2" Grid.Column="1" Text="{Binding NO, Mode=TwoWay}" InputScope="Number"  MaxLength="4" Width="200" Background="Transparent" HorizontalAlignment="Left" BorderBrush="{ThemeResource ComboBoxDisabledForegroundThemeBrush}" Foreground="White" TextChanging="TextBox_TextChanging"/>
 
             <TextBlock Grid.Row="3" Grid.Column="0" Text="帐单日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox x:Name="cbOrderDay" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Card, Converter={StaticResource dateConverter}, ConverterParameter=OrderDay}" Width="200" Foreground="White" Background="Transparent">
+            <ComboBox x:Name="cbOrderDay" Grid.Row="3" Grid.Column="1" SelectedItem="{Binding OrderDay, Mode=TwoWay}" Width="200" Foreground="White" Background="Transparent">
                 <x:Int32>1</x:Int32>
                 <x:Int32>2</x:Int32>
                 <x:Int32>3</x:Int32>
@@ -167,7 +167,7 @@
             </ComboBox>
 
             <TextBlock Grid.Row="4" Grid.Column="0" Text="还款日" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0"/>
-            <ComboBox x:Name="cbPayDay" Grid.Row="4" Grid.Column="1" SelectedItem="{Binding Card, Converter={StaticResource dateConverter}, ConverterParameter=PayDay}" Width="200" Foreground="White" Background="Transparent">
+            <ComboBox x:Name="cbPayDay" Grid.Row="4" Grid.Column="1" SelectedItem="{Binding PayDay, Mode=TwoWay}" Width="200" Foreground="White" Background="Transparent">
                 <x:Int32>1</x:Int32>
                 <x:Int32>2</x:Int32>
                 <x:Int32>3</x:Int32>
