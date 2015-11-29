@@ -132,7 +132,7 @@ namespace CC.Views
                 }
                 else if (symbol == Symbol.Edit)
                 {
-                    if (CreditCardManager.GetInstance().GetAllCards().Contains(card))
+                    if (CreditCardManager.GetInstance().GetAllCards().Contains(card) && !card.Equals(cce.OrignalCard))
                     {
                         new MessageDialog("卡片已经存在！", "提示").ShowAsync();
                     }

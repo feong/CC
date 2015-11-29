@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace CC.Models
 {
@@ -13,14 +14,18 @@ namespace CC.Models
         public int PayDay { get; private set; }
         public int UsedTimes { get; private set; }
 
-        public CreditCard(Bank bank, String nickName, String no, int orderDay, int payDay)
+        // Default
+        public CreditCard(Bank bank, String nickName, String no, int orderDay, int payDay,int userdTiems)
         {
             this.Bank = bank;
             this.NickName = nickName;
             this.NO = no;
             this.OrderDay = orderDay;
             this.PayDay = payDay;
+            this.UsedTimes = userdTiems;
         }
+
+        public CreditCard(Bank bank, String nickName, String no, int orderDay, int payDay) : this(bank, nickName, no, orderDay, payDay, 0) { }
         
         public DateTime CurrentOrderDate()
         {
@@ -109,6 +114,12 @@ namespace CC.Models
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+
+        public override string ToString()
+        {
+            return String.Format("{0}_{1}_{2}{3}{4}{5}.|", (int)this.Bank, this.NickName, this.NO, this.OrderDay.ToString("D2"), this.PayDay.ToString("D2"), this.UsedTimes.ToString("D2"));
         }
     }
 }
