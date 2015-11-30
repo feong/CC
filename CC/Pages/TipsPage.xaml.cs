@@ -16,7 +16,6 @@ namespace CC.Pages
         public TipsPage()
         {
             this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         #region Navigation

@@ -50,10 +50,12 @@ namespace CC.Pages
         
         private void Init()
         {
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
             var version = Package.Current.Id.Version;
             this.tbVersion.Text = version.ToString();
             this.tbVersion.Text = String.Format("{0}.{1}", version.Major, version.Minor);
+
+            this.payDaySwitch.IsOn = UserSettings.IsPayDayNotify;
+            this.freeDaySwitch.IsOn = UserSettings.IsFreeDayNotify;
         }
 
         private void CopyButtonTapped(object sender, TappedRoutedEventArgs e)
@@ -79,6 +81,16 @@ namespace CC.Pages
             md.DefaultCommandIndex = 0;
             md.CancelCommandIndex = 1;
             md.ShowAsync();
+        }
+
+        private void PayDayNotifyChanged(object sender, RoutedEventArgs e)
+        {
+            UserSettings.IsPayDayNotify = this.payDaySwitch.IsOn;
+        }
+
+        private void FreeDayNotifyChanged(object sender, RoutedEventArgs e)
+        {
+            UserSettings.IsFreeDayNotify = this.freeDaySwitch.IsOn;
         }
     }
 }

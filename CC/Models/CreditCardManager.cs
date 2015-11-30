@@ -1,8 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net;
 using System.Text.RegularExpressions;
+using Windows.Data.Xml.Dom;
 using Windows.Storage;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
 
 namespace CC.Models
 {
@@ -25,12 +28,98 @@ namespace CC.Models
                     instance = new CreditCardManager();
                     instance.cards = new ObservableCollection<CreditCard>();
                     instance.LoadCards();
+                    instance.cards.CollectionChanged += CardsCollectionChanged;
+                    CreditCardManager.UpdatePrimaryTile();
                 }
             }
             return instance;
         }
 
-        private CreditCardManager() { }
+        private static void CardsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            instance.SaveCards();
+            CreditCardManager.UpdatePrimaryTile();
+        }
+
+
+        private static void UpdatePrimaryTile()
+        {
+            string TileTemplateXml = @"
+<tile> 
+  <visual>
+    <binding template='TileMedium' hint-textStacking='center'>
+      <group>
+        <subgroup hint-weight='33'>
+          <image src='Assets/BankIcons/{0}' hint-crop='circle'/>
+        </subgroup>
+        <subgroup hint-textStacking='center'>
+          <text hint-style='body'>{1}</text>
+          <text hint-style='caption'>还款日: {2}</text>
+          <text hint-style='caption'>今日免息期: {3}</text>
+        </subgroup>
+      </group>
+    </binding>
+    <binding template='TileWide'>
+      <group>
+        <subgroup hint-weight='10'>
+          <image src='Assets/BankIcons/{0}' hint-crop='circle'/>
+        </subgroup>
+        <subgroup hint-textStacking='center'>
+          <text hint-style='body'>{1}</text>
+        </subgroup>
+      </group>
+      <text/>
+      <text/>
+      <text/>
+      <text/>
+      <text/>
+      <group>
+        <subgroup hint-textStacking='bottom'>
+          <text hint-style='caption' hint-align='right'>还款日: {2}</text>
+          <text hint-style='caption' hint-align='right'>今日免息期: {3}</text>
+        </subgroup>
+      </group>
+    </binding>
+  </visual>
+</tile>";
+
+            try
+            {
+                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                updater.EnableNotificationQueueForWide310x150(true);
+                updater.EnableNotificationQueueForSquare150x150(true);
+                updater.EnableNotificationQueue(true);
+                updater.Clear();
+
+                foreach (var card in instance.GetAllCards())
+                {
+
+
+                    var bank = card.Bank;
+                    ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+                    var bankInfo = dic[bank.ToString()] as BankInfo;
+
+                    var doc = new XmlDocument();
+                    var payDay = card.LeftPayDays() == 0 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    var xml = string.Format(TileTemplateXml, bankInfo.ImageName, bankInfo.Title, payDay, card.CurrentFreeDays());
+                    doc.LoadXml(WebUtility.HtmlDecode(xml), new XmlLoadSettings
+                    {
+                        ProhibitDtd = false,
+                        ValidateOnParse = false,
+                        ElementContentWhiteSpace = false,
+                        ResolveExternals = false
+                    });
+
+                    updater.Update(new TileNotification(doc));
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+    private CreditCardManager() { }
         #endregion
 
         private ObservableCollection<CreditCard> cards;
@@ -45,7 +134,6 @@ namespace CC.Models
             if (!this.cards.Contains(card))
             {
                 this.cards.Add(card);
-                this.SaveCards();
             }
         }
 
@@ -56,14 +144,12 @@ namespace CC.Models
                 var index = this.cards.IndexOf(oldCard);
                 this.cards.Remove(oldCard);
                 this.cards.Insert(index, newCard);
-                this.SaveCards();
             }
         }
         
         public void RemoveCard(CreditCard card)
         {
             this.cards.Remove(card);
-            this.SaveCards();
         }
 
         public override string ToString()
@@ -73,17 +159,19 @@ namespace CC.Models
             {
                 output += card.ToString();
             }
-            this.LoadCards(output);
             return output;
         }
-        
-        private bool LoadCards()
+       
+        private void SaveCards()
         {
-            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(LOCAL_SETTINGS))
+            if (cards == null) return;
+
+            String configs = "";
+            foreach (var card in cards)
             {
-                return this.LoadCards((String)ApplicationData.Current.LocalSettings.Values[LOCAL_SETTINGS]);
+                configs += card.ToString();
             }
-            return false;
+            ApplicationData.Current.LocalSettings.Values[LOCAL_SETTINGS] = configs;
         }
 
         public bool LoadCards(String cards)
@@ -146,16 +234,13 @@ namespace CC.Models
             return result;
         }
 
-        private void SaveCards()
+        private bool LoadCards()
         {
-            if (cards == null) return;
-
-            String configs = "";
-            foreach (var card in cards)
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(LOCAL_SETTINGS))
             {
-                configs += card.ToString();
+                return this.LoadCards((String)ApplicationData.Current.LocalSettings.Values[LOCAL_SETTINGS]);
             }
-            ApplicationData.Current.LocalSettings.Values[LOCAL_SETTINGS] = configs;
+            return false;
         }
     }
 }

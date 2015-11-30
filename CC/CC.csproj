@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Models\CreditCardManager.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Pages\CardsPage.xaml.cs">
       <DependentUpon>CardsPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +129,8 @@
     <None Include="CC_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
     <Content Include="Assets\BankIcons\Baoshang.png" />
     <Content Include="Assets\BankIcons\Beijing.png" />
     <Content Include="Assets\BankIcons\Chengdunongshang.png" />
@@ -167,6 +170,7 @@
     <Content Include="Assets\BankIcons\Zhaoshang.png" />
     <Content Include="Assets\BankIcons\Zhongguo.png" />
     <Content Include="Assets\BankIcons\Zhongxin.png" />
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

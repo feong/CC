@@ -1,5 +1,10 @@
 ﻿using CC.Models;
 using CC.Views;
+using System;
+using System.IO;
+using System.Net;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -22,12 +27,11 @@ namespace CC.Pages
         {
             this.InitializeComponent();
             this.Init();
-            //this.NavigationCacheMode = NavigationCacheMode.Enabled;
             //this.TestCode();
         }
 
         #region Navigation
-        
+
         private void TipsPageTapped(object sender, TappedRoutedEventArgs e)
         {
             Frame.Navigate(typeof(TipsPage), this.splitView.IsPaneOpen);
@@ -68,7 +72,7 @@ namespace CC.Pages
         {
             cce.setEditor(Status.Adding, CreditCard.DefaultCard);
         }
-        
+
         private void TestCode()
         {
             var zhaoshangCard = new CreditCard(Bank.Zhaoshang, "Young", "8888", 20, 5);
@@ -80,5 +84,6 @@ namespace CC.Pages
             ccm.AddCard(jiaotongCard);
             ccm.AddCard(zhongxinCard);
         }
+
     }
 }

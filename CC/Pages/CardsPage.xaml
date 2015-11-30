@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:CC.Views"
-    mc:Ignorable="d">
+    mc:Ignorable="d" NavigationCacheMode="Enabled">
 
     <Page.Resources>
         <v:StatusToBoolConverter x:Key="editorConverter"/>
