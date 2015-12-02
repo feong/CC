@@ -1,16 +1,12 @@
 ﻿using CC.Models;
+using CC.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace CC.Views
+namespace CC.Common
 {
     public class BankToInt32Converter : IValueConverter
     {
@@ -211,6 +207,46 @@ namespace CC.Views
                 symbol = (parameter as String) == "Left" ? Symbol.Edit : Symbol.Delete;
             }
             return symbol;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class RefreshDayToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var day = (double)value;
+            var str = "";
+            if (day == 0)
+            {
+                str = "还款日当天更新磁贴";
+            }
+            else if (day < 15)
+            {
+                str = String.Format("还款日前{0}天开始更新磁贴", day);
+            }
+            else
+            {
+                str = "每天更新磁贴";
+            }
+            return str;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ToastTimeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return String.Format("在{0}点后推送消息", value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Media;
 
 namespace CC.Models
 {
-    enum Bank
+    public enum Bank
     {
         Baoshang, Beijing,
         Chengdunongshang, Chongqing, Chongqingnongshang,
@@ -22,7 +22,7 @@ namespace CC.Models
         Zhada, Zhaoshang, Zhongguo, Zhongxin
     }
 
-    class BankInfo
+    public class BankInfo
     {
         private static Uri baseUri = new Uri(@"ms-appx:///Assets/BankIcons/");
         public static BankInfo DefaultBankInfo = new BankInfo

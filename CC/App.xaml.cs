@@ -1,7 +1,10 @@
-﻿using CC.Pages;
+﻿using CC.Common;
+using CC.Pages;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -62,6 +65,7 @@ namespace CC
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
+                RegisterBackgroundTask();
             }
 
             if (rootFrame.Content == null)
@@ -69,6 +73,7 @@ namespace CC
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 参数
+                //this.BackButtonHandler(rootFrame);
                 rootFrame.Navigate(typeof(CardsPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
@@ -97,6 +102,31 @@ namespace CC
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
+        }
+
+        private void BackButtonHandler(Frame frame)
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                // 如果设备有后退按钮，那么同样处理下。
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, e) =>
+                {
+                    if (frame.CanGoBack)
+                    {
+                        frame.GoBack();
+                        e.Handled = true;
+                    }
+                };
+            }
+        }
+
+        private async Task RegisterBackgroundTask()
+        {
+            //var task = await BackgroundTask.RegisterBackgroundTask(
+            //    typeof(BackgroundTask),
+            //    "SayFarkTask",
+            //    new TimeTrigger(1, false),
+            //    null);
         }
     }
 }

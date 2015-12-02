@@ -6,11 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:v="using:CC.Views"
+    xmlns:c="using:CC.Common"
     mc:Ignorable="d" NavigationCacheMode="Enabled">
 
     <Page.Resources>
-        <v:StatusToBoolConverter x:Key="editorConverter"/>
-        <v:VisibilityToBoolConverter x:Key="visibilityConverter"/>
+        <c:StatusToBoolConverter x:Key="editorConverter"/>
+        <c:VisibilityToBoolConverter x:Key="visibilityConverter"/>
     </Page.Resources>
 
     <Grid>

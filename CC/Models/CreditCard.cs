@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CC.Models
 {
-    class CreditCard
+    public class CreditCard
     {
         public static CreditCard DefaultCard = new CreditCard(Bank.Nanchang,"", "1989", 10, 10);
 

@@ -1,7 +1,10 @@
-﻿using CC.Models;
+﻿using CC.Common;
+using CC.Models;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,10 +20,13 @@ namespace CC.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        private bool isInited;
+
         public SettingsPage()
         {
             this.InitializeComponent();
             this.Init();
+            this.isInited = true;
         }
 
         #region Navigation
@@ -44,6 +50,7 @@ namespace CC.Pages
                 this.splitView.IsPaneOpen = Window.Current.Bounds.Width < App.MIN_WIDTH ? false : (bool)e.Parameter;
             }
             this.tbCurrent.Text = CreditCardManager.GetInstance().ToString();
+            Frame.BackStack.Clear();
         }
 
         #endregion
@@ -54,8 +61,12 @@ namespace CC.Pages
             this.tbVersion.Text = version.ToString();
             this.tbVersion.Text = String.Format("{0}.{1}", version.Major, version.Minor);
 
-            this.payDaySwitch.IsOn = UserSettings.IsPayDayNotify;
-            this.freeDaySwitch.IsOn = UserSettings.IsFreeDayNotify;
+            this.toastSwitch.IsOn = UserSettings.IsToastOn;
+            this.tileSwitch.IsOn = UserSettings.IsTileOn;
+            this.toastSlider.Value = UserSettings.ToastTime;
+            this.tileSlider.Value = UserSettings.TileDay;
+            
+            //this.BackButtonHandler();
         }
 
         private void CopyButtonTapped(object sender, TappedRoutedEventArgs e)
@@ -83,14 +94,48 @@ namespace CC.Pages
             md.ShowAsync();
         }
 
-        private void PayDayNotifyChanged(object sender, RoutedEventArgs e)
+        private void ToastSwitchChanged(object sender, RoutedEventArgs e)
         {
-            UserSettings.IsPayDayNotify = this.payDaySwitch.IsOn;
+            UserSettings.IsToastOn = this.toastSwitch.IsOn;
         }
 
-        private void FreeDayNotifyChanged(object sender, RoutedEventArgs e)
+        private void ToastTimeChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            UserSettings.IsFreeDayNotify = this.freeDaySwitch.IsOn;
+            if (!this.isInited) return;
+            UserSettings.ToastTime = this.toastSlider.Value;
+        }
+
+        private void TileSwitchChanged(object sender, RoutedEventArgs e)
+        {
+            UserSettings.IsTileOn = this.tileSwitch.IsOn;
+            //BackgroundTask.UpdatePrimaryTile();
+        }
+
+        private void TileRefreshDayChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if (!this.isInited) return;
+            UserSettings.TileDay = this.tileSlider.Value;
+            //BackgroundTask.UpdatePrimaryTile();
+        }
+
+        private void BackButtonHandler()
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+            {
+                // 如果设备有后退按钮，那么同样处理下。
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtonsBackPressed;
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtonsBackPressed;
+            }
+        }
+
+        private void HardwareButtonsBackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
+        {
+            Frame frame = Window.Current.Content as Frame;
+            if (frame.CanGoBack)
+            {
+                frame.GoBack();
+                e.Handled = true;
+            }
         }
     }
 }

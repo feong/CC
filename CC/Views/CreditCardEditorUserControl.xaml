@@ -6,18 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:m="using:CC.Models"
+    xmlns:c="using:CC.Common"
     mc:Ignorable="d"
     d:DesignHeight="260"
     d:DesignWidth="380">
     <UserControl.Resources>
-        <local:BankToBankIconConverter x:Key="iconConverter"/>
-        <local:BankToBankNameConverter x:Key="nameConverter"/>
-        <local:BankToBrushConverter x:Key="brushConverter"/>
+        <c:BankToBankIconConverter x:Key="iconConverter"/>
+        <c:BankToBankNameConverter x:Key="nameConverter"/>
+        <c:BankToBrushConverter x:Key="brushConverter"/>
 
-        <local:BankToInt32Converter x:Key="bankConverter"/>
-        <local:DateToDayConverter x:Key="dateConverter"/>
+        <c:BankToInt32Converter x:Key="bankConverter"/>
+        <c:DateToDayConverter x:Key="dateConverter"/>
 
-        <local:StatusToSymbolConverter x:Key="symbolConverter"/>
+        <c:StatusToSymbolConverter x:Key="symbolConverter"/>
     </UserControl.Resources>
 
     <StackPanel Background="{Binding SelectedIndex, Converter={StaticResource brushConverter}, ElementName=cbBank}" CornerRadius="8">
