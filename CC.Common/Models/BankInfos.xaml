@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CC.Models">
+    xmlns:local="using:CC.Common.Models">
 
     <local:BankInfo x:Key="Baoshang" Bank="Baoshang" Title="包商银行" ImageName="Baoshang.png" Color="#FF0695A0"/>
     <local:BankInfo x:Key="Beijing" Bank="Beijing" Title="北京银行" ImageName="Beijing.png" Color="#FFDD271E"/>

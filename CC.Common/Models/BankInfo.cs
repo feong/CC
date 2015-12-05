@@ -2,7 +2,7 @@
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace CC.Models
+namespace CC.Common.Models
 {
     public enum Bank
     {
@@ -24,7 +24,7 @@ namespace CC.Models
 
     public class BankInfo
     {
-        private static Uri baseUri = new Uri(@"ms-appx:///Assets/BankIcons/");
+        private static Uri baseUri = new Uri(@"ms-appx:///CC.Common/BankIcons/");
         public static BankInfo DefaultBankInfo = new BankInfo
         {
             Bank = Bank.Nanchang,

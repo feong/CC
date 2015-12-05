@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5BA80067-B418-43A0-A7D3-A4BA28D2E2FC}</ProjectGuid>
+    <ProjectGuid>{C02CFB7D-707E-45A6-ADD9-366C904DFF1E}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CC.Task</RootNamespace>
-    <AssemblyName>CC.Task</AssemblyName>
+    <RootNamespace>CC.CoreTask</RootNamespace>
+    <AssemblyName>CC.CoreTask</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>

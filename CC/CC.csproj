@@ -100,13 +100,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="Models\CreditCardManager.cs" />
-    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Pages\CardsPage.xaml.cs">
       <DependentUpon>CardsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BankInfo.cs" />
-    <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -131,45 +127,6 @@
   <ItemGroup>
     <Content Include="Assets\BadgeLogo.scale-100.png" />
     <Content Include="Assets\BadgeLogo.scale-200.png" />
-    <Content Include="Assets\BankIcons\Baoshang.png" />
-    <Content Include="Assets\BankIcons\Beijing.png" />
-    <Content Include="Assets\BankIcons\Chengdunongshang.png" />
-    <Content Include="Assets\BankIcons\Chongqing.png" />
-    <Content Include="Assets\BankIcons\Chongqingnongshang.png" />
-    <Content Include="Assets\BankIcons\Gongshang.png" />
-    <Content Include="Assets\BankIcons\Guangda.png" />
-    <Content Include="Assets\BankIcons\Guangfa.png" />
-    <Content Include="Assets\BankIcons\Guangzhou.png" />
-    <Content Include="Assets\BankIcons\Haerbin.png" />
-    <Content Include="Assets\BankIcons\Hangzhou.png" />
-    <Content Include="Assets\BankIcons\Hankou.png" />
-    <Content Include="Assets\BankIcons\Hebei.png" />
-    <Content Include="Assets\BankIcons\Huaxia.png" />
-    <Content Include="Assets\BankIcons\Huishang.png" />
-    <Content Include="Assets\BankIcons\Jiangsu.png" />
-    <Content Include="Assets\BankIcons\Jianshe.png" />
-    <Content Include="Assets\BankIcons\Jiaotong.png" />
-    <Content Include="Assets\BankIcons\Minsheng.png" />
-    <Content Include="Assets\BankIcons\Nanchang.png" />
-    <Content Include="Assets\BankIcons\Nanjing.png" />
-    <Content Include="Assets\BankIcons\Ningbo.png" />
-    <Content Include="Assets\BankIcons\Nongye.png" />
-    <Content Include="Assets\BankIcons\Pingan.png" />
-    <Content Include="Assets\BankIcons\Pufa.png" />
-    <Content Include="Assets\BankIcons\Shanghai.png" />
-    <Content Include="Assets\BankIcons\Shanghainongshang.png" />
-    <Content Include="Assets\BankIcons\Shangrao.png" />
-    <Content Include="Assets\BankIcons\Shengjing.png" />
-    <Content Include="Assets\BankIcons\Tianjing.png" />
-    <Content Include="Assets\BankIcons\Wenzhou.png" />
-    <Content Include="Assets\BankIcons\Wulumuqishangye.png" />
-    <Content Include="Assets\BankIcons\Xingye.png" />
-    <Content Include="Assets\BankIcons\Yaodunongshang.png" />
-    <Content Include="Assets\BankIcons\Youzheng.png" />
-    <Content Include="Assets\BankIcons\Zhada.png" />
-    <Content Include="Assets\BankIcons\Zhaoshang.png" />
-    <Content Include="Assets\BankIcons\Zhongguo.png" />
-    <Content Include="Assets\BankIcons\Zhongxin.png" />
     <Content Include="Assets\Square310x310Logo.scale-200.png" />
     <Content Include="Assets\Square71x71Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -186,11 +143,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Models\BankInfos.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
     <Page Include="Pages\CardsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +168,16 @@
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CC.Common\CC.Common.csproj">
+      <Project>{d31ab2ff-b292-4700-9f6e-5e8f7c4ba842}</Project>
+      <Name>CC.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CC.CoreTask\CC.CoreTask.csproj">
+      <Project>{c02cfb7d-707e-45a6-add9-366c904dff1e}</Project>
+      <Name>CC.CoreTask</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

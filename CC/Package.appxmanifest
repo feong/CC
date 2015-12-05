@@ -27,7 +27,7 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="gold" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="CC.Task.BackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="CC.CoreTask.BackgroundTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>

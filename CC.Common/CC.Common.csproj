@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5BA80067-B418-43A0-A7D3-A4BA28D2E2FC}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
+    <ProjectGuid>{D31AB2FF-B292-4700-9F6E-5E8F7C4BA842}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CC.Task</RootNamespace>
-    <AssemblyName>CC.Task</AssemblyName>
+    <RootNamespace>CC.Common</RootNamespace>
+    <AssemblyName>CC.Common</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -108,17 +108,65 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackgroundTask.cs" />
+    <Compile Include="Models\BankInfo.cs" />
+    <Compile Include="Models\BankInfosReader.cs" />
+    <Compile Include="Models\CreditCard.cs" />
+    <Compile Include="Models\CreditCardManager.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CC.Common\CC.Common.csproj">
-      <Project>{d31ab2ff-b292-4700-9f6e-5e8f7c4ba842}</Project>
-      <Name>CC.Common</Name>
-    </ProjectReference>
+    <Content Include="Models\BankInfos.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BankIcons\Baoshang.png" />
+    <Content Include="BankIcons\Beijing.png" />
+    <Content Include="BankIcons\Chengdunongshang.png" />
+    <Content Include="BankIcons\Chongqing.png" />
+    <Content Include="BankIcons\Chongqingnongshang.png" />
+    <Content Include="BankIcons\Gongshang.png" />
+    <Content Include="BankIcons\Guangda.png" />
+    <Content Include="BankIcons\Guangfa.png" />
+    <Content Include="BankIcons\Guangzhou.png" />
+    <Content Include="BankIcons\Haerbin.png" />
+    <Content Include="BankIcons\Hangzhou.png" />
+    <Content Include="BankIcons\Hankou.png" />
+    <Content Include="BankIcons\Hebei.png" />
+    <Content Include="BankIcons\Huaxia.png" />
+    <Content Include="BankIcons\Huishang.png" />
+    <Content Include="BankIcons\Jiangsu.png" />
+    <Content Include="BankIcons\Jianshe.png" />
+    <Content Include="BankIcons\Jiaotong.png" />
+    <Content Include="BankIcons\Minsheng.png" />
+    <Content Include="BankIcons\Nanchang.png" />
+    <Content Include="BankIcons\Nanjing.png" />
+    <Content Include="BankIcons\Ningbo.png" />
+    <Content Include="BankIcons\Nongye.png" />
+    <Content Include="BankIcons\Pingan.png" />
+    <Content Include="BankIcons\Pufa.png" />
+    <Content Include="BankIcons\Shanghai.png" />
+    <Content Include="BankIcons\Shanghainongshang.png" />
+    <Content Include="BankIcons\Shangrao.png" />
+    <Content Include="BankIcons\Shengjing.png" />
+    <Content Include="BankIcons\Tianjing.png" />
+    <Content Include="BankIcons\Wenzhou.png" />
+    <Content Include="BankIcons\Wulumuqishangye.png" />
+    <Content Include="BankIcons\Xingye.png" />
+    <Content Include="BankIcons\Yaodunongshang.png" />
+    <Content Include="BankIcons\Youzheng.png" />
+    <Content Include="BankIcons\Zhada.png" />
+    <Content Include="BankIcons\Zhaoshang.png" />
+    <Content Include="BankIcons\Zhongguo.png" />
+    <Content Include="BankIcons\Zhongxin.png" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

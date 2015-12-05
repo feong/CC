@@ -1,4 +1,4 @@
-﻿using CC.Common;
+﻿using CC.CoreTask;
 using CC.Pages;
 using System;
 using System.Threading.Tasks;
@@ -65,7 +65,8 @@ namespace CC
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
-                RegisterBackgroundTask();
+                RegisterBackgroundTask(typeof(BackgroundTask), "BackgroundTask", new TimeTrigger(15, false), null);
+                //RegisterBackgroundTask(typeof(BackgroundTask), "BackgroundTask", new ApplicationTrigger(), null);
             }
 
             if (rootFrame.Content == null)
@@ -120,13 +121,50 @@ namespace CC
             }
         }
 
-        private async Task RegisterBackgroundTask()
+        public async Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint,
+                                                                string taskName,
+                                                                IBackgroundTrigger trigger,
+                                                                IBackgroundCondition condition)
         {
-            //var task = await BackgroundTask.RegisterBackgroundTask(
-            //    typeof(BackgroundTask),
-            //    "SayFarkTask",
-            //    new TimeTrigger(1, false),
-            //    null);
+            var status = await BackgroundExecutionManager.RequestAccessAsync();
+            if (status == BackgroundAccessStatus.Unspecified || status == BackgroundAccessStatus.Denied)
+            {
+                return null;
+            }
+
+            foreach (var cur in BackgroundTaskRegistration.AllTasks)
+            {
+                if (cur.Value.Name == taskName)
+                {
+                    cur.Value.Unregister(true);
+                }
+            }
+
+            var builder = new BackgroundTaskBuilder
+            {
+                Name = taskName,
+                TaskEntryPoint = taskEntryPoint.FullName
+            };
+
+            builder.SetTrigger(trigger);
+
+            if (condition != null)
+            {
+                builder.AddCondition(condition);
+            }
+
+            try
+            {
+                BackgroundTaskRegistration task = builder.Register();
+                return task;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            //(trigger as ApplicationTrigger).RequestAsync();
         }
     }
 }

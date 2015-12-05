@@ -1,5 +1,5 @@
 ﻿using CC.Common;
-using CC.Models;
+using CC.Common.Models;
 using System;
 using Windows.UI;
 using Windows.UI.Popups;

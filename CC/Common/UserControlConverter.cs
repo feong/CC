@@ -1,4 +1,4 @@
-﻿using CC.Models;
+﻿using CC.Common.Models;
 using CC.Views;
 using System;
 using Windows.UI.Xaml;
@@ -26,7 +26,7 @@ namespace CC.Common
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var bank = (Bank)value;
-            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var dic = BankInfosReader.GetInstance().Dic;
             var bankInfo = dic[bank.ToString()] as BankInfo;
             return new BitmapImage(bankInfo.Uri);
         }
@@ -42,7 +42,7 @@ namespace CC.Common
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var bank = (Bank)value;
-            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var dic = BankInfosReader.GetInstance().Dic;
             var bankInfo = dic[bank.ToString()] as BankInfo;
             return bankInfo.Title;
         }
@@ -58,7 +58,7 @@ namespace CC.Common
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var bank = (Bank)value;
-            ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+            var dic = BankInfosReader.GetInstance().Dic;
             var bankInfo = dic[bank.ToString()] as BankInfo;
             return bankInfo.Color;
         }

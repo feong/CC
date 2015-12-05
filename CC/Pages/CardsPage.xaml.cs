@@ -1,11 +1,6 @@
-﻿using CC.Models;
+﻿using CC.Common.Models;
 using CC.Views;
-using System;
-using System.IO;
 using System.Linq;
-using System.Net;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;

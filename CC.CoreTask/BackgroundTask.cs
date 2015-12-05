@@ -6,53 +6,15 @@ using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using CC.Common.Models;
 
-namespace CC.Task
+namespace CC.CoreTask
 {
     public sealed class BackgroundTask : IBackgroundTask
     {
         public void Run(IBackgroundTaskInstance taskInstance)
         {
-            BackgroundTask.UpdatePrimaryTile();
+            //BackgroundTask.UpdatePrimaryTile();
             BackgroundTask.MakeAToast();
         }
-
-        public static async Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint,
-                                                                string taskName,
-                                                                IBackgroundTrigger trigger,
-                                                                IBackgroundCondition condition)
-        {
-            var status = await BackgroundExecutionManager.RequestAccessAsync();
-            if (status == BackgroundAccessStatus.Unspecified || status == BackgroundAccessStatus.Denied)
-            {
-                return null;
-            }
-
-            foreach (var cur in BackgroundTaskRegistration.AllTasks)
-            {
-                if (cur.Value.Name == taskName)
-                {
-                    cur.Value.Unregister(true);
-                }
-            }
-
-            var builder = new BackgroundTaskBuilder
-            {
-                Name = taskName,
-                TaskEntryPoint = taskEntryPoint.FullName
-            };
-
-            builder.SetTrigger(trigger);
-
-            if (condition != null)
-            {
-                builder.AddCondition(condition);
-            }
-
-            BackgroundTaskRegistration task = builder.Register();
-            return task;
-        }
-
-
 
         public static void UpdatePrimaryTile()
         {
@@ -62,7 +24,7 @@ namespace CC.Task
     <binding template='TileMedium' hint-textStacking='center'>
       <group>
         <subgroup hint-weight='33'>
-          <image src='Assets/BankIcons/{0}' hint-crop='circle'/>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
         </subgroup>
         <subgroup hint-textStacking='center'>
           <text hint-style='body'>{1}</text>
@@ -74,7 +36,7 @@ namespace CC.Task
     <binding template='TileWide'>
       <group>
         <subgroup hint-weight='10'>
-          <image src='Assets/BankIcons/{0}' hint-crop='circle'/>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
         </subgroup>
         <subgroup hint-textStacking='center'>
           <text hint-style='body'>{1}</text>
@@ -95,7 +57,7 @@ namespace CC.Task
     <binding template='TileLarge' hint-textStacking='center'>
       <group>
         <subgroup hint-weight='33'>
-          <image src='Assets/BankIcons/{0}' hint-crop='circle'/>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
         </subgroup>
         <subgroup hint-textStacking='center'>
           <text hint-style='body'>{1}</text>
@@ -110,9 +72,6 @@ namespace CC.Task
             try
             {
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
-                updater.EnableNotificationQueueForWide310x150(true);
-                updater.EnableNotificationQueueForSquare150x150(true);
-                updater.EnableNotificationQueue(true);
                 updater.Clear();
 
                 if (!UserSettings.IsTileOn) return;
@@ -120,7 +79,7 @@ namespace CC.Task
                 foreach (var card in CreditCardManager.GetInstance().GetAllCards())
                 {
                     var bank = card.Bank;
-                    ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+                    var dic = BankInfosReader.GetInstance().Dic;
                     var bankInfo = dic[bank.ToString()] as BankInfo;
 
                     var doc = new XmlDocument();
@@ -144,22 +103,23 @@ namespace CC.Task
 <toast>
   <visual>
     <binding template='ToastGeneric'>
-      <image src='Assets/BankIcons/{0}' placement='appLogoOverride' hint-crop='circle'/>
+      <image src='CC.Common/BankIcons/{0}' placement='appLogoOverride' hint-crop='circle'/>
       <text>{1}</text>
-      <text>今天是您的还款日，请及时还款。</text>
+      <text>今天是您({2})的还款日，请及时还款。</text>
     </binding>
   </visual>
 </toast>";
             foreach (var card in CreditCardManager.GetInstance().GetAllCards())
             {
                 var bank = card.Bank;
-                ResourceDictionary dic = new ResourceDictionary { Source = new Uri("ms-appx:///Models/BankInfos.xaml") };
+                var dic = BankInfosReader.GetInstance().Dic;
                 var bankInfo = dic[bank.ToString()] as BankInfo;
 
                 if (card.LeftPayDays() != 0) continue;
-                if (DateTime.Now.Hour < UserSettings.ToastTime) continue;
+                //if (DateTime.Now.Hour < UserSettings.ToastTime) continue;
 
-                var xml = string.Format(ToastTemplateXml, bankInfo.ImageName, bankInfo.Title);
+                var specifyCard = card.NickName == "" ? "尾号" + card.NO : "别名" + card.NickName;
+                var xml = string.Format(ToastTemplateXml, bankInfo.ImageName, bankInfo.Title, specifyCard);
 
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xml);

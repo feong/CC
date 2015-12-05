@@ -1,10 +1,9 @@
-﻿using CC.Common;
-using CC.Models;
+﻿using CC.Common.Models;
+using CC.CoreTask;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -69,6 +68,44 @@ namespace CC.Pages
             //this.BackButtonHandler();
         }
 
+        #region Toast & Tile
+
+        private void ToastSwitchChanged(object sender, RoutedEventArgs e)
+        {
+            UserSettings.IsToastOn = this.toastSwitch.IsOn;
+            BackgroundTask.MakeAToast();
+        }
+
+        private void ToastTimeChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if (!this.isInited) return;
+            UserSettings.ToastTime = this.toastSlider.Value;
+        }
+
+        private void TileSwitchChanged(object sender, RoutedEventArgs e)
+        {
+            UserSettings.IsTileOn = this.tileSwitch.IsOn;
+            new Task(() =>
+            {
+                BackgroundTask.UpdatePrimaryTile();
+            }).Start();
+        }
+
+        private void TileRefreshDayChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            if (!this.isInited) return;
+            UserSettings.TileDay = this.tileSlider.Value;
+            BackgroundTask.UpdatePrimaryTile();
+            //new Task(() =>
+            //{
+            //    BackgroundTask.UpdatePrimaryTile();
+            //}).Start();
+        }
+
+        #endregion
+
+        #region Copy & Restore
+
         private void CopyButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             var dataPackage = new DataPackage();
@@ -94,29 +131,7 @@ namespace CC.Pages
             md.ShowAsync();
         }
 
-        private void ToastSwitchChanged(object sender, RoutedEventArgs e)
-        {
-            UserSettings.IsToastOn = this.toastSwitch.IsOn;
-        }
-
-        private void ToastTimeChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            if (!this.isInited) return;
-            UserSettings.ToastTime = this.toastSlider.Value;
-        }
-
-        private void TileSwitchChanged(object sender, RoutedEventArgs e)
-        {
-            UserSettings.IsTileOn = this.tileSwitch.IsOn;
-            //BackgroundTask.UpdatePrimaryTile();
-        }
-
-        private void TileRefreshDayChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            if (!this.isInited) return;
-            UserSettings.TileDay = this.tileSlider.Value;
-            //BackgroundTask.UpdatePrimaryTile();
-        }
+        #endregion
 
         private void BackButtonHandler()
         {
@@ -137,5 +152,6 @@ namespace CC.Pages
                 e.Handled = true;
             }
         }
+        
     }
 }

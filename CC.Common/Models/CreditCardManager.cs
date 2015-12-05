@@ -8,7 +8,7 @@ using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 
-namespace CC.Models
+namespace CC.Common.Models
 {
     public class CreditCardManager
     {
@@ -30,19 +30,19 @@ namespace CC.Models
                     instance.cards = new ObservableCollection<CreditCard>();
                     instance.LoadCards();
                     instance.cards.CollectionChanged += CardsCollectionChanged;
-                    //BackgroundTask.UpdatePrimaryTile();
                 }
             }
             return instance;
         }
 
+        private CreditCardManager() { }
+
         private static void CardsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             instance.SaveCards();
-            //BackgroundTask.UpdatePrimaryTile();
+            instance.UpdatePrimaryTile();
         }
 
-        private CreditCardManager() { }
         #endregion
 
         private ObservableCollection<CreditCard> cards;
@@ -164,6 +164,87 @@ namespace CC.Models
                 return this.LoadCards((String)ApplicationData.Current.LocalSettings.Values[LOCAL_SETTINGS]);
             }
             return false;
+        }
+        
+        private void UpdatePrimaryTile()
+        {
+            string TileTemplateXml = @"
+<tile> 
+  <visual>
+    <binding template='TileMedium' hint-textStacking='center'>
+      <group>
+        <subgroup hint-weight='33'>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
+        </subgroup>
+        <subgroup hint-textStacking='center'>
+          <text hint-style='body'>{1}</text>
+          <text hint-style='caption'>还款日: {2}</text>
+          <text hint-style='caption'>今日免息期: {3}</text>
+        </subgroup>
+      </group>
+    </binding>
+    <binding template='TileWide'>
+      <group>
+        <subgroup hint-weight='10'>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
+        </subgroup>
+        <subgroup hint-textStacking='center'>
+          <text hint-style='body'>{1}</text>
+        </subgroup>
+      </group>
+      <text/>
+      <text/>
+      <text/>
+      <text/>
+      <text/>
+      <group>
+        <subgroup hint-textStacking='bottom'>
+          <text hint-style='caption' hint-align='right'>还款日: {2}</text>
+          <text hint-style='caption' hint-align='right'>今日免息期: {3}</text>
+        </subgroup>
+      </group>
+    </binding>
+    <binding template='TileLarge' hint-textStacking='center'>
+      <group>
+        <subgroup hint-weight='33'>
+          <image src='CC.Common/BankIcons/{0}' hint-crop='circle'/>
+        </subgroup>
+        <subgroup hint-textStacking='center'>
+          <text hint-style='body'>{1}</text>
+          <text hint-style='caption'>还款日: {2}</text>
+          <text hint-style='caption'>今日免息期: {3}</text>
+        </subgroup>
+      </group>
+    </binding>
+  </visual>
+</tile>";
+
+            try
+            {
+                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                updater.Clear();
+
+                if (!UserSettings.IsTileOn) return;
+
+                foreach (var card in CreditCardManager.GetInstance().GetAllCards())
+                {
+                    var bank = card.Bank;
+                    var dic = BankInfosReader.GetInstance().Dic;
+                    var bankInfo = dic[bank.ToString()] as BankInfo;
+
+                    var doc = new XmlDocument();
+
+                    if (card.LeftPayDays() > UserSettings.TileDay) continue;
+                    var payDay = card.LeftPayDays() == 0 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    var xml = string.Format(TileTemplateXml, bankInfo.ImageName, bankInfo.Title, payDay, card.CurrentFreeDays());
+                    doc.LoadXml(xml);
+                    updater.Update(new TileNotification(doc));
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
     }
 }

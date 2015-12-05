@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Text;
 
-namespace CC.Models
+namespace CC.Common.Models
 {
     public class CreditCard
     {
