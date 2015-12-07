@@ -112,14 +112,15 @@
     <Compile Include="Models\BankInfosReader.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\CreditCardManager.cs" />
+    <Compile Include="Models\ToastTileManager.cs" />
     <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\BankInfos.xaml">
+    <None Include="Models\BankInfos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BankIcons\Baoshang.png" />

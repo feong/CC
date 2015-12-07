@@ -1,10 +1,9 @@
-﻿using CC.CoreTask;
+﻿using CC.Common;
+using CC.Common.Models;
 using CC.Pages;
 using System;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Background;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -65,8 +64,10 @@ namespace CC
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
-                RegisterBackgroundTask(typeof(BackgroundTask), "BackgroundTask", new TimeTrigger(15, false), null);
-                //RegisterBackgroundTask(typeof(BackgroundTask), "BackgroundTask", new ApplicationTrigger(), null);
+                if (UserSettings.IsTileOn || UserSettings.IsToastOn)
+                {
+                    BackgroundTaskRegister.RegisterBackgroundTask();
+                }
             }
 
             if (rootFrame.Content == null)
@@ -74,7 +75,7 @@ namespace CC
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 参数
-                //this.BackButtonHandler(rootFrame);
+                this.BackButtonHandler(rootFrame);
                 rootFrame.Navigate(typeof(CardsPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
@@ -114,57 +115,12 @@ namespace CC
                 {
                     if (frame.CanGoBack)
                     {
-                        frame.GoBack();
                         e.Handled = true;
+                        frame.GoBack();
                     }
                 };
             }
         }
 
-        public async Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint,
-                                                                string taskName,
-                                                                IBackgroundTrigger trigger,
-                                                                IBackgroundCondition condition)
-        {
-            var status = await BackgroundExecutionManager.RequestAccessAsync();
-            if (status == BackgroundAccessStatus.Unspecified || status == BackgroundAccessStatus.Denied)
-            {
-                return null;
-            }
-
-            foreach (var cur in BackgroundTaskRegistration.AllTasks)
-            {
-                if (cur.Value.Name == taskName)
-                {
-                    cur.Value.Unregister(true);
-                }
-            }
-
-            var builder = new BackgroundTaskBuilder
-            {
-                Name = taskName,
-                TaskEntryPoint = taskEntryPoint.FullName
-            };
-
-            builder.SetTrigger(trigger);
-
-            if (condition != null)
-            {
-                builder.AddCondition(condition);
-            }
-
-            try
-            {
-                BackgroundTaskRegistration task = builder.Register();
-                return task;
-
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            //(trigger as ApplicationTrigger).RequestAsync();
-        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using CC.Common.Models;
 using CC.Views;
 using System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace CC.Common
@@ -60,12 +62,31 @@ namespace CC.Common
             var bank = (Bank)value;
             var dic = BankInfosReader.GetInstance().Dic;
             var bankInfo = dic[bank.ToString()] as BankInfo;
-            return bankInfo.Color;
+            return this.ToBrush(bankInfo.Color);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
+        }
+        
+        private Brush ToBrush(String color)
+        {
+            return new SolidColorBrush(this.ToColor(color));
+        }
+
+        private Color ToColor(string color)
+        {
+            if (color.StartsWith("#"))
+                color = color.Replace("#", string.Empty);
+            int v = int.Parse(color, System.Globalization.NumberStyles.HexNumber);
+            return new Color()
+            {
+                A = System.Convert.ToByte((v >> 24) & 255),
+                R = System.Convert.ToByte((v >> 16) & 255),
+                G = System.Convert.ToByte((v >> 8) & 255),
+                B = System.Convert.ToByte((v >> 0) & 255)
+            };
         }
     }
 
@@ -246,7 +267,7 @@ namespace CC.Common
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return String.Format("在{0}点后推送消息", value);
+            return String.Format("在{0}点推送消息", value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

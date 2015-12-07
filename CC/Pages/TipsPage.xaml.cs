@@ -22,20 +22,23 @@ namespace CC.Pages
         
         private void CardsPageTapped(object sender, TappedRoutedEventArgs e)
         {
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(CardsPage), this.splitView.IsPaneOpen);
         }
 
         private void SettingsPageTapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SettingsPage), this.splitView.IsPaneOpen);
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
+            Frame.Navigate(typeof(SettingsPage), this.splitView.IsPaneOpen);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
             if (e != null && e.Parameter is bool)
             {
-                this.splitView.IsPaneOpen = Window.Current.Bounds.Width < App.MIN_WIDTH ? false : (bool)e.Parameter;
+                this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : (bool)e.Parameter;
             }
         }
 
@@ -43,17 +46,17 @@ namespace CC.Pages
 
         private void SMZDMButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.smzdm.com"));
+            var x = Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.smzdm.com"));
         }
 
         private void SMZDMBYButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("http://post.smzdm.com/p/125780"));
+            var x = Windows.System.Launcher.LaunchUriAsync(new Uri("http://post.smzdm.com/p/125780"));
         }
 
         private void SMZDMFQQXButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Windows.System.Launcher.LaunchUriAsync(new Uri("http://post.smzdm.com/p/74738"));
+            var x = Windows.System.Launcher.LaunchUriAsync(new Uri("http://post.smzdm.com/p/74738"));
         }
     }
 }

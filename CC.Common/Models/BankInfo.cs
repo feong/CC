@@ -29,17 +29,16 @@ namespace CC.Common.Models
         {
             Bank = Bank.Nanchang,
             Title = "南昌银行",
-            ImageName = "Nanchang.png",
-            Color = new SolidColorBrush(Colors.Green)
+            Color = "#FF049491"
         };
 
         public Bank Bank { get; set; }
         public String Title { get; set; }
-        public String ImageName { get; set; }
-        public Brush Color { get; set; }
+        public String Color { get; set; }
+
         public Uri Uri
         {
-            get { return new Uri(baseUri, this.ImageName); }
+            get { return new Uri(baseUri, this.Bank.ToString() + ".png"); }
         }
     }
 

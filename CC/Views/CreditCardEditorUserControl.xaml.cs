@@ -122,7 +122,7 @@ namespace CC.Views
                 {
                     if (CreditCardManager.GetInstance().GetAllCards().Contains(card))
                     {
-                        new MessageDialog("卡片已经存在！", "提示").ShowAsync();
+                        var x = new MessageDialog("卡片已经存在！", "提示").ShowAsync();
                     }
                     else
                     {
@@ -134,7 +134,7 @@ namespace CC.Views
                 {
                     if (CreditCardManager.GetInstance().GetAllCards().Contains(card) && !card.Equals(cce.OrignalCard))
                     {
-                        new MessageDialog("卡片已经存在！", "提示").ShowAsync();
+                        var x = new MessageDialog("卡片已经存在！", "提示").ShowAsync();
                     }
                     else
                     {
@@ -149,7 +149,7 @@ namespace CC.Views
                         }, 1));
                         md.DefaultCommandIndex = 0;
                         md.CancelCommandIndex = 1;
-                        md.ShowAsync();
+                        var x = md.ShowAsync();
                     }
                 }
             }
@@ -177,7 +177,7 @@ namespace CC.Views
                 }, 1));
                 md.DefaultCommandIndex = 0;
                 md.CancelCommandIndex = 1;
-                md.ShowAsync();
+                var x = md.ShowAsync();
             }
         }
     }

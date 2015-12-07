@@ -6,10 +6,31 @@ namespace CC.Common.Models
     public class UserSettings
     {
 
-        private static String IS_TOAST_ON = "IS_TOAST_ON";
-        private static String IS_TILE_ON = "IS_TILE_ON";
-        private static String TOAST_TIME = "TOAST_TIME";
-        private static String TILE_DAY = "TILE_DAY";
+        private static readonly String CARDS_SETTINGS = "CARDS_SETTINGS";
+
+        private static readonly  String IS_TOAST_ON = "IS_TOAST_ON";
+        private static readonly String IS_TILE_ON = "IS_TILE_ON";
+        private static readonly String TOAST_TIME = "TOAST_TIME";
+        private static readonly String TILE_DAY = "TILE_DAY";
+
+        public static readonly int All_The_Time = 15;
+
+        public static String CardsSettings
+        {
+            get
+            {
+                String result = "";
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey(CARDS_SETTINGS))
+                {
+                    result = (String)ApplicationData.Current.LocalSettings.Values[CARDS_SETTINGS];
+                }
+                return result;
+            }
+            set
+            {
+                ApplicationData.Current.LocalSettings.Values[CARDS_SETTINGS] = value;
+            }
+        }
 
         public static bool IsToastOn
         {
@@ -62,8 +83,7 @@ namespace CC.Common.Models
                 ApplicationData.Current.LocalSettings.Values[TOAST_TIME] = value;
             }
         }
-
-
+        
         public static double TileDay
         {
             get

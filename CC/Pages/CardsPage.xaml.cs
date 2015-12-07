@@ -1,6 +1,5 @@
 ﻿using CC.Common.Models;
 using CC.Views;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -30,19 +29,23 @@ namespace CC.Pages
 
         private void TipsPageTapped(object sender, TappedRoutedEventArgs e)
         {
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(TipsPage), this.splitView.IsPaneOpen);
         }
 
         private void SettingsPageTapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SettingsPage), this.splitView.IsPaneOpen);
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
+            Frame.Navigate(typeof(SettingsPage), this.splitView.IsPaneOpen);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e != null && e.Parameter is bool)
             {
-                this.splitView.IsPaneOpen = Window.Current.Bounds.Width < App.MIN_WIDTH ? false : (bool)e.Parameter;
+                this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : (bool)e.Parameter;
             }
             Frame.BackStack.Clear();
         }
@@ -54,8 +57,6 @@ namespace CC.Pages
             this.gvCards.ItemsSource = CreditCardManager.GetInstance().GetAllCards();
             this.splitAddCardView.DataContext = cce;
             cce.setEditor(Status.OK, CreditCard.DefaultCard);
-
-            //this.BackButtonHandler();
         }
 
         private void CreditCardTapped(object sender, TappedRoutedEventArgs e)
@@ -82,37 +83,6 @@ namespace CC.Pages
             ccm.AddCard(jiansheCard);
             ccm.AddCard(jiaotongCard);
             ccm.AddCard(zhongxinCard);
-        }
-
-        private void BackButtonHandler()
-        {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                // 如果设备有后退按钮，那么同样处理下。
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtonsBackPressed;
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtonsBackPressed;
-            }
-        }
-
-        private void HardwareButtonsBackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
-        {
-            Frame frame = Window.Current.Content as Frame;
-            if (frame.CanGoBack)
-            {
-                this.ResetBackStack(frame);
-                this.Frame.GoBack();
-                e.Handled = true;
-            }
-        }
-
-        private void ResetBackStack(Frame frame)
-        {
-            PageStackEntry mainPage = frame.BackStack.Where(b => b.SourcePageType == typeof(CreditCard)).FirstOrDefault();
-            frame.BackStack.Clear();
-            if (mainPage != null)
-            {
-                frame.BackStack.Add(mainPage);
-            }
         }
 
     }

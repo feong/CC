@@ -99,6 +99,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BackgroundTaskRegister.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Pages\CardsPage.xaml.cs">
       <DependentUpon>CardsPage.xaml</DependentUpon>

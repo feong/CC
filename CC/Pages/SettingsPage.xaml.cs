@@ -1,5 +1,5 @@
-﻿using CC.Common.Models;
-using CC.CoreTask;
+﻿using CC.Common;
+using CC.Common.Models;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -32,24 +32,25 @@ namespace CC.Pages
 
         private void CardsPageTapped(object sender, TappedRoutedEventArgs e)
         {
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(CardsPage), this.splitView.IsPaneOpen);
         }
 
         private void TipsPageTapped(object sender, TappedRoutedEventArgs e)
         {
-
+            //var isOpen = this.splitView.IsPaneOpen;
+            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(TipsPage), this.splitView.IsPaneOpen);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
             if (e != null && e.Parameter is bool)
             {
-                this.splitView.IsPaneOpen = Window.Current.Bounds.Width < App.MIN_WIDTH ? false : (bool)e.Parameter;
+                this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : (bool)e.Parameter;
             }
             this.tbCurrent.Text = CreditCardManager.GetInstance().ToString();
-            Frame.BackStack.Clear();
         }
 
         #endregion
@@ -64,42 +65,60 @@ namespace CC.Pages
             this.tileSwitch.IsOn = UserSettings.IsTileOn;
             this.toastSlider.Value = UserSettings.ToastTime;
             this.tileSlider.Value = UserSettings.TileDay;
-            
-            //this.BackButtonHandler();
         }
 
         #region Toast & Tile
 
         private void ToastSwitchChanged(object sender, RoutedEventArgs e)
         {
+            if (!this.isInited) return;
+
             UserSettings.IsToastOn = this.toastSwitch.IsOn;
-            BackgroundTask.MakeAToast();
+            if (this.toastSwitch.IsOn)
+            {
+                BackgroundTaskRegister.RegisterBackgroundTask();
+                new Task(() =>
+                {
+                    ToastTileManager.MakeAToast();
+                }).Start();
+            }
         }
 
         private void ToastTimeChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             if (!this.isInited) return;
+
             UserSettings.ToastTime = this.toastSlider.Value;
+            new Task(() =>
+            {
+                ToastTileManager.MakeAToast();
+            }).Start();
         }
 
         private void TileSwitchChanged(object sender, RoutedEventArgs e)
         {
+            if (!this.isInited) return;
+
             UserSettings.IsTileOn = this.tileSwitch.IsOn;
-            new Task(() =>
+            if (this.tileSwitch.IsOn)
             {
-                BackgroundTask.UpdatePrimaryTile();
-            }).Start();
+                BackgroundTaskRegister.RegisterBackgroundTask();
+                new Task(() =>
+                {
+                    ToastTileManager.UpdatePrimaryTile();
+                }).Start();
+            }
         }
 
         private void TileRefreshDayChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             if (!this.isInited) return;
+
             UserSettings.TileDay = this.tileSlider.Value;
-            BackgroundTask.UpdatePrimaryTile();
-            //new Task(() =>
-            //{
-            //    BackgroundTask.UpdatePrimaryTile();
-            //}).Start();
+            new Task(() =>
+            {
+                ToastTileManager.UpdatePrimaryTile();
+            }).Start();
         }
 
         #endregion
@@ -128,30 +147,10 @@ namespace CC.Pages
             }, 1));
             md.DefaultCommandIndex = 0;
             md.CancelCommandIndex = 1;
-            md.ShowAsync();
+            var x = md.ShowAsync();
         }
 
         #endregion
-
-        private void BackButtonHandler()
-        {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                // 如果设备有后退按钮，那么同样处理下。
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed -= HardwareButtonsBackPressed;
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += HardwareButtonsBackPressed;
-            }
-        }
-
-        private void HardwareButtonsBackPressed(object sender, Windows.Phone.UI.Input.BackPressedEventArgs e)
-        {
-            Frame frame = Window.Current.Content as Frame;
-            if (frame.CanGoBack)
-            {
-                frame.GoBack();
-                e.Handled = true;
-            }
-        }
         
     }
 }
