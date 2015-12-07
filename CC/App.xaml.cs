@@ -4,6 +4,7 @@ using CC.Pages;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -75,7 +76,7 @@ namespace CC
                 // 当导航堆栈尚未还原时，导航到第一页，
                 // 并通过将所需信息作为导航参数传入来配置
                 // 参数
-                this.BackButtonHandler(rootFrame);
+                this.HandlerBackNavigation();
                 rootFrame.Navigate(typeof(CardsPage), e.Arguments);
             }
             // 确保当前窗口处于活动状态
@@ -106,21 +107,20 @@ namespace CC
             deferral.Complete();
         }
 
-        private void BackButtonHandler(Frame frame)
+        private void HandlerBackNavigation()
         {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-            {
-                // 如果设备有后退按钮，那么同样处理下。
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, e) =>
-                {
-                    if (frame.CanGoBack)
-                    {
-                        e.Handled = true;
-                        frame.GoBack();
-                    }
-                };
-            }
+            SystemNavigationManager naviManager = SystemNavigationManager.GetForCurrentView();
+            naviManager.BackRequested += OnBackRequest;
         }
 
+        private void OnBackRequest(object sender, BackRequestedEventArgs e)
+        {
+            var frame = Window.Current.Content as Frame;
+            if (frame.CanGoBack)
+            {
+                e.Handled = true;
+                frame.GoBack();
+            }
+        }
     }
 }

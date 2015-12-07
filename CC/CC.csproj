@@ -166,11 +166,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CC.Common\CC.Common.csproj">
       <Project>{d31ab2ff-b292-4700-9f6e-5e8f7c4ba842}</Project>
       <Name>CC.Common</Name>

@@ -29,16 +29,14 @@ namespace CC.Pages
 
         private void TipsPageTapped(object sender, TappedRoutedEventArgs e)
         {
-            //var isOpen = this.splitView.IsPaneOpen;
-            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(TipsPage), this.splitView.IsPaneOpen);
+            this.splitView.IsPaneOpen = false;
         }
 
         private void SettingsPageTapped(object sender, TappedRoutedEventArgs e)
         {
-            //var isOpen = this.splitView.IsPaneOpen;
-            //this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : isOpen;
             Frame.Navigate(typeof(SettingsPage), this.splitView.IsPaneOpen);
+            this.splitView.IsPaneOpen = false;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
