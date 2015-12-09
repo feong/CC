@@ -80,6 +80,17 @@ namespace CC.Common.Models
         public static void UpdatePrimaryTile()
         {
             ToastTileManager.UpdatePrimaryTile(false);
+            ToastTileManager.UpdatePrimaryTile(true);
+        }
+
+        public static void CancelUpdatePrimaryTile()
+        {
+            var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+            updater.Clear();
+            foreach (var tile in updater.GetScheduledTileNotifications())
+            {
+                updater.RemoveFromSchedule(tile);
+            }
         }
 
         public static void UpdatePrimaryTile(bool isBackgroundCall)
@@ -92,13 +103,16 @@ namespace CC.Common.Models
                 updater.EnableNotificationQueueForSquare150x150(true);
                 updater.EnableNotificationQueueForSquare310x310(true);
                 updater.EnableNotificationQueue(true);
-                //updater.Clear();
+                if (!isBackgroundCall)
+                {
+                    ToastTileManager.CancelUpdatePrimaryTile();
+                }
 
                 if (!UserSettings.IsTileOn) return;
 
                 foreach (var card in CreditCardManager.GetInstance().GetAllCards())
                 {
-                    if (UserSettings.TileDay != UserSettings.All_The_Time && card.LeftPayDays() > UserSettings.TileDay) continue;
+                    if (UserSettings.TileDay != UserSettings.All_The_Time && (card.LeftPayDays() < 0 || card.LeftPayDays() > UserSettings.TileDay)) continue;
 
                     var bank = card.Bank;
                     var dic = BankInfosReader.GetInstance().Dic;
@@ -106,22 +120,97 @@ namespace CC.Common.Models
 
                     var doc = new XmlDocument();
 
-                    //var delayOneMinuteTime = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, DateTimeOffset.Now.Hour, DateTimeOffset.Now.Minute + 1, DateTimeOffset.Now.Second, DateTimeOffset.Now.Offset);
-                    var delaThreeMinutesTime = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, DateTimeOffset.Now.Hour, DateTimeOffset.Now.Minute, DateTimeOffset.Now.Second + 3, DateTimeOffset.Now.Offset);
-                    var delayToTomorrowTime = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day + 1, 0, 0, 3, DateTimeOffset.Now.Offset);
+                    var delayThreeSeconds = DateTimeOffset.Now.AddSeconds(3);
+                    var delayThreeSecondsTime = new DateTimeOffset(delayThreeSeconds.Year, delayThreeSeconds.Month, delayThreeSeconds.Day, delayThreeSeconds.Hour, delayThreeSeconds.Minute, delayThreeSeconds.Second, delayThreeSeconds.Offset);
+                    var tomorrow = DateTimeOffset.Now.AddDays(1);
+                    var delayToTomorrowTime = new DateTimeOffset(tomorrow.Year, tomorrow.Month, tomorrow.Day, 0, 0, 3, tomorrow.Offset);
 
-                    var payDay = (isBackgroundCall && card.LeftPayDays() == 1) || card.LeftPayDays() == 0 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    var payDay = "";
+                    if (isBackgroundCall)
+                    {
+                        payDay = card.LeftPayDays() == 1 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    }
+                    else
+                    {
+                        if (delayThreeSecondsTime.Day == DateTimeOffset.Now.Day)
+                        {
+                            payDay = card.LeftPayDays() == 0 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                        }
+                        else
+                        {
+                            payDay = card.LeftPayDays() == 1 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                        }
+                    }
                     var xml = string.Format(TileTemplateXml, bankInfo.Bank.ToString(), bankInfo.Title, payDay, card.CurrentFreeDays());
                     doc.LoadXml(xml);
-                    
-                    var noti = isBackgroundCall ? new ScheduledTileNotification(doc, delayToTomorrowTime) : new ScheduledTileNotification(doc, delaThreeMinutesTime);
-                    noti.Tag = card.Bank.ToString() + card.NO;
+
+                    var noti = isBackgroundCall ? new ScheduledTileNotification(doc, delayToTomorrowTime) : new ScheduledTileNotification(doc, delayThreeSecondsTime);
+                    noti.ExpirationTime = delayToTomorrowTime;
                     updater.AddToSchedule(noti);
+
+
+                    //var bank = card.Bank;
+                    //var dic = BankInfosReader.GetInstance().Dic;
+                    //var bankInfo = dic[bank.ToString()] as BankInfo;
+
+                    //var doc = new XmlDocument();
+                    //var payDay = "";
+                    //var scheduleTime = new DateTimeOffset();
+
+                    //if (UserSettings.TileDay != UserSettings.All_The_Time && (card.LeftPayDays() < 0 || card.LeftPayDays() > UserSettings.TileDay))
+                    //{
+                    //    scheduleTime = DateTimeOffset.Now.AddDays(30);
+                    //    payDay = card.CurrentPayDate().ToString("MM/dd");
+                    //}
+                    //else
+                    //{
+                    //    if (isBackgroundCall)
+                    //    {
+                    //        var tomorrow = DateTimeOffset.Now.AddDays(1);
+                    //        scheduleTime = new DateTimeOffset(tomorrow.Year, tomorrow.Month, tomorrow.Day, 0, 0, 3, tomorrow.Offset);
+                    //        payDay = card.LeftPayDays() == 1 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    //    }
+                    //    else
+                    //    {
+                    //        scheduleTime = DateTimeOffset.Now.AddSeconds(3);
+                    //        if (scheduleTime.Day == DateTimeOffset.Now.Day)
+                    //        {
+                    //            payDay = card.LeftPayDays() == 0 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    //        }
+                    //        else
+                    //        {
+                    //            payDay = card.LeftPayDays() == 1 ? "今天" : card.CurrentPayDate().ToString("MM/dd");
+                    //        }
+                    //    }
+                    //}
+
+                    //var xml = string.Format(TileTemplateXml, bankInfo.Bank.ToString(), bankInfo.Title, payDay, card.CurrentFreeDays());
+                    //doc.LoadXml(xml);
+
+                    //var noti = new ScheduledTileNotification(doc, scheduleTime);
+                    //noti.Tag = card.Bank.ToString() + card.NO;
+                    //if (!isBackgroundCall)
+                    //{
+                    //    noti.Tag = "T" + noti.Tag;
+                    //    var temp = DateTimeOffset.Now.AddDays(1);
+                    //    var tomorrow = new DateTimeOffset(temp.Year, temp.Month, temp.Day, 0, 0, 3, temp.Offset);
+                    //    noti.ExpirationTime = tomorrow;
+                    //}
+                    //updater.AddToSchedule(noti);
                 }
             }
             catch (Exception)
             {
                 // ignored
+            }
+        }
+
+        public static void CancelMakeAToast()
+        {
+            ToastNotifier nt = ToastNotificationManager.CreateToastNotifier();
+            foreach (var noti in nt.GetScheduledToastNotifications())
+            {
+                nt.RemoveFromSchedule(noti);
             }
         }
 

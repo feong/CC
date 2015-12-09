@@ -38,27 +38,27 @@ namespace CC.Common.Models
 
         public int LeftPayDays()
         {
-            return this.CurrentPayDate().Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            return this.CurrentPayDate().Subtract(DateTime.Now).Days;
         }
 
         public int CurrentFreeDays()
         {
             var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
             var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
-            return payDateForNextOrder.Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            return payDateForNextOrder.Subtract(DateTime.Now).Days;
         }
 
         public int CurrentTotalFreeDays()
         {
             var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
             var payDateForNextOrder = this.PayDateForOrder(nextOrderDate, this.PayDay);
-            return payDateForNextOrder.Subtract(this.CurrentOrderDate()).Days;          // Consider whether it should -1.
+            return this.Bank == Bank.Zhaoshang? payDateForNextOrder.Subtract(this.CurrentOrderDate()).Days: payDateForNextOrder.Subtract(this.CurrentOrderDate().AddDays(1)).Days;
         }
 
         public int ToNextOrderDay()
         {
             var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
-            return nextOrderDate.Subtract(DateTime.Now).Days;          // Consider whether it should -1.
+            return nextOrderDate.Subtract(DateTime.Now).Days;
         }
 
         public int NextTotalFreeDays()
@@ -66,7 +66,7 @@ namespace CC.Common.Models
             var nextOrderDate = this.CurrentOrderDate().AddMonths(1);
             var nextNextOrderDate = nextOrderDate.AddMonths(1);
             var payDateForNextNextOrder = this.PayDateForOrder(nextNextOrderDate, this.PayDay);
-            return payDateForNextNextOrder.Subtract(nextOrderDate).Days;          // Consider whether it should -1.
+            return this.Bank == Bank.Zhaoshang ? payDateForNextNextOrder.Subtract(nextOrderDate).Days : payDateForNextNextOrder.Subtract(nextOrderDate.AddDays(1)).Days;
         }
 
         public void AddUsedTime()

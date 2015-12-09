@@ -1,5 +1,6 @@
 ﻿using CC.Common.Models;
 using CC.Views;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -17,6 +18,7 @@ namespace CC.Pages
 
         private CreditCardEditor cce = new CreditCardEditor();
         private CreditCardManager ccm = CreditCardManager.GetInstance();
+        private DateTime openDate = DateTime.Now;
 
         public CardsPage()
         {
@@ -46,15 +48,33 @@ namespace CC.Pages
                 this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : (bool)e.Parameter;
             }
             Frame.BackStack.Clear();
+            this.ReloadGridViewIfNeed();
+        }
+
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            this.ReloadGridViewIfNeed();
         }
 
         #endregion
+
 
         private void Init()
         {
             this.gvCards.ItemsSource = CreditCardManager.GetInstance().GetAllCards();
             this.splitAddCardView.DataContext = cce;
             cce.setEditor(Status.OK, CreditCard.DefaultCard);
+        }
+
+        private void ReloadGridViewIfNeed()
+        {
+            if (DateTime.Now.DayOfYear != this.openDate.DayOfYear)
+            {
+                this.openDate = DateTime.Now;
+                this.gvCards.ItemsSource = null;
+                this.gvCards.ItemsSource = CreditCardManager.GetInstance().GetAllCards();
+            }
         }
 
         private void CreditCardTapped(object sender, TappedRoutedEventArgs e)

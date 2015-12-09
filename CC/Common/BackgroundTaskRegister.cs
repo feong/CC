@@ -10,10 +10,22 @@ namespace CC.Common
 {
     class BackgroundTaskRegister
     {
+        private static readonly String taskName = "BackgroundTask";
 
         public static void RegisterBackgroundTask()
         {
-            var x = RegisterBackgroundTask(typeof(BackgroundTask), "BackgroundTask", new TimeTrigger(60 * 12, false), null);
+            var x = RegisterBackgroundTask(typeof(BackgroundTask), taskName, new TimeTrigger(60 * 24, false), null);
+        }
+
+        public static void UnregisterBackgroundTask()
+        {
+            foreach (var cur in BackgroundTaskRegistration.AllTasks)
+            {
+                if (cur.Value.Name == taskName)
+                {
+                    cur.Value.Unregister(true);
+                }
+            }
         }
 
         private async static Task<BackgroundTaskRegistration> RegisterBackgroundTask(Type taskEntryPoint, string taskName, IBackgroundTrigger trigger, IBackgroundCondition condition)

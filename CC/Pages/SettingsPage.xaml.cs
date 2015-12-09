@@ -80,6 +80,14 @@ namespace CC.Pages
                     ToastTileManager.MakeAToast();
                 }).Start();
             }
+            else
+            {
+                ToastTileManager.CancelMakeAToast();
+                if (!this.tileSwitch.IsOn)
+                {
+                    BackgroundTaskRegister.UnregisterBackgroundTask();
+                }
+            }
         }
 
         private void ToastTimeChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
@@ -105,6 +113,14 @@ namespace CC.Pages
                 {
                     ToastTileManager.UpdatePrimaryTile();
                 }).Start();
+            }
+            else
+            {
+                ToastTileManager.CancelUpdatePrimaryTile();
+                if (!this.toastSwitch.IsOn)
+                {
+                    BackgroundTaskRegister.UnregisterBackgroundTask();
+                }
             }
         }
 
