@@ -49,6 +49,7 @@ namespace CC.Pages
                 this.splitView.IsPaneOpen = this.splitView.DisplayMode == SplitViewDisplayMode.Overlay ? false : (bool)e.Parameter;
             }
             this.tbCurrent.Text = CreditCardManager.GetInstance().ToString();
+            this.tbCopyed.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -144,6 +145,7 @@ namespace CC.Pages
             var dataPackage = new DataPackage();
             dataPackage.SetText(this.tbCurrent.Text);
             Clipboard.SetContent(dataPackage);
+            this.tbCopyed.Visibility = Visibility.Visible;
         }
 
         private void RestoreButtonTapped(object sender, TappedRoutedEventArgs e)

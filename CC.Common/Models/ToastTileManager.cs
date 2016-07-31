@@ -15,17 +15,11 @@ namespace CC.Common.Models
         private static readonly String TileTemplateXml = @"
 <tile> 
   <visual>
-    <binding template='TileMedium' hint-textStacking='center'>
-      <group>
-        <subgroup hint-weight='33'>
-          <image src='CC.Common/BankIcons/{0}.png' hint-crop='circle'/>
-        </subgroup>
-        <subgroup hint-textStacking='center'>
-          <text hint-style='body'>{1}</text>
-          <text hint-style='caption'>还款日: {2}</text>
-          <text hint-style='caption'>今日免息期: {3}</text>
-        </subgroup>
-      </group>
+    <binding template='TileMedium' hint-textStacking='center' hint-overlay='80'>
+      <image src='CC.Common/BankIcons/{0}.png' placement='background'/>
+      <text hint-style='caption'>还款日</text>
+      <text hint-style='titleNumeral'>{2}</text>
+      <text hint-style='captionSubtle'>免息期: {3}</text>
     </binding>
     <binding template='TileWide'>
       <group>
@@ -36,17 +30,9 @@ namespace CC.Common.Models
           <text hint-style='body'>{1}</text>
         </subgroup>
       </group>
-      <text/>
-      <text/>
-      <text/>
-      <text/>
-      <text/>
-      <group>
-        <subgroup hint-textStacking='bottom'>
-          <text hint-style='caption' hint-align='right'>还款日: {2}</text>
-          <text hint-style='caption' hint-align='right'>今日免息期: {3}</text>
-        </subgroup>
-      </group>
+      <text hint-style='caption'/>
+      <text hint-style='caption' hint-align='right'>还款日: {2}</text>
+      <text hint-style='caption' hint-align='right'>今日免息期: {3}</text>
     </binding>
     <binding template='TileLarge' hint-textStacking='center'>
       <group>
@@ -145,7 +131,7 @@ namespace CC.Common.Models
                     doc.LoadXml(xml);
 
                     var noti = isBackgroundCall ? new ScheduledTileNotification(doc, delayToTomorrowTime) : new ScheduledTileNotification(doc, delayThreeSecondsTime);
-                    noti.ExpirationTime = delayToTomorrowTime;
+                    noti.ExpirationTime = isBackgroundCall ? delayToTomorrowTime.AddDays(1).AddMilliseconds(-3) : delayToTomorrowTime.AddMilliseconds(-3);
                     updater.AddToSchedule(noti);
 
 

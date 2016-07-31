@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="279b08b7-5781-4e2b-adf3-7c2eabbf4d2e" Publisher="CN=feong" Version="1.0.0.0" />
+  <Identity Name="56594Feong.UWP" Publisher="CN=C94B79C7-ED0A-47B5-806B-18A2E0B2453A" Version="1.1.2.0" />
   <mp:PhoneIdentity PhoneProductId="279b08b7-5781-4e2b-adf3-7c2eabbf4d2e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>CC</DisplayName>
-    <PublisherDisplayName>feong</PublisherDisplayName>
+    <DisplayName>信用卡UWP</DisplayName>
+    <PublisherDisplayName>Feong</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -16,7 +16,6 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CC.App">
       <uap:VisualElements DisplayName="信用卡管理中心" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="CC" BackgroundColor="transparent">
-        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png" />
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\Square71x71Logo.png" Square310x310Logo="Assets\Square310x310Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -35,4 +34,7 @@
       </Extensions>
     </Application>
   </Applications>
+  <Capabilities>
+    <uap:Capability Name="chat" />
+  </Capabilities>
 </Package>
